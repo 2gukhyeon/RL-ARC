@@ -1,0 +1,28 @@
+[ 
+
+{
+    "dataset_name": "data/commonsenseqa",
+    "hash_key": "problem",
+    "store_name": "eval_outputs/Hotpot-models-fresh/commonsenseqa",
+    "gpu_memory_utilization":0.9,
+    "log_path": "results/Hotpot-models-fresh/commonsenseqa"
+}, 
+{   "name":"Base", 
+"model": "Qwen/Qwen2.5-3B",
+"check_fn": "llm_confidence_verifier",
+"sys_prompt_name": "tac",
+"vllm_task": ["confidence_at_end","ans_at_end"]
+},
+{   "name":"RLCR", 
+"model": "./data/RLCR-hotpot/checkpoint-78",
+"check_fn": "llm_confidence_verifier",
+"sys_prompt_name": "tabc_long",
+"vllm_task": ["confidence_at_end","ans_at_end"]
+},
+{   "name":"RLAR", 
+"model": "./data/RLAR-hotpot/checkpoint-78",
+"check_fn": "llm_confidence_verifier",
+"sys_prompt_name": "tabc_long_align",
+"vllm_task": ["confidence_at_end","ans_at_end"]
+}
+]
