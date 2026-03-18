@@ -1,10 +1,7 @@
-# Beyond Binary Rewards: Training LMs to Reason about Their Uncertainty
+# Beyond Binary Rewards: Training LMs to Reason about Their Uncertainty (editing RLAR (tentative))
 
 This repository contains the official code for the paper:
 
-> **Beyond Binary Rewards: Training LMs to Reason about Their Uncertainty**  
-> Mehul Damani, Isha Puri, Stewart Slocum, Idan Shenfeld, Yoon Kim, Jacob Andreas  
-> *[arXiv:2507.16806](https://arxiv.org/abs/2507.16806)*
 
 This repository builds on top of [TRL](https://github.com/huggingface/trl) and [Open-R1](https://github.com/huggingface/open-r1). We thank the authors and maintainers of these projects.
 
