@@ -1,0 +1,32 @@
+{
+    "Base": {
+        "pass@1": 0.196,
+        "brier_score": 0.7487366,
+        "ece": 0.76414,
+        "auroc": 0.506628210985887,
+        "accuracy": 0.196,
+        "completion length": 2283.982,
+        "confidence level": 0.9601400000000001,
+        "confidence format adherence": 1.0
+    },
+    "RLCR": {
+        "pass@1": 0.106,
+        "brier_score": 0.41454470000000004,
+        "ece": 0.53083,
+        "auroc": 0.30822358701616653,
+        "accuracy": 0.106,
+        "completion length": 20251.106,
+        "confidence level": 0.5466700000000001,
+        "confidence format adherence": 1.0
+    },
+    "RLAR": {
+        "pass@1": 0.25,
+        "brier_score": 0.211654674,
+        "ece": 0.13191200000000003,
+        "auroc": 0.5404373333333334,
+        "accuracy": 0.25,
+        "completion length": 16679.715,
+        "confidence level": 0.264688,
+        "confidence format adherence": 1.0
+    }
+}
