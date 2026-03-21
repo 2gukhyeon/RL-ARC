@@ -5,12 +5,12 @@ This repository contains the tentative code for the NeurIPS 2026 project.
 ## 🛠 Installation
 
 ### Environment Setup
-1. cloud GPU
-pre-condition
-- CUDA version >= 12.1
-- torch version = 2.5.1
-- python version = 3.10
-- hard disk >= 160 GB
+
+#### 1. cloud GPU
+  - CUDA version >= 12.1
+  - torch version = 2.5.1
+  - python version = 3.10
+  - hard disk >= 160 GB
   
 ```bash
 git clone https://github.com/2gukhyeon/RLAR_tentative.git
@@ -18,21 +18,20 @@ your git key!
 cd RLAR_tentative 
 pip install -r requirement.txt
 ```
-2. xx.40 server (ours)
-pre-condition
-- CUDA version >= 12.1
+#### 2. xx.40 server (ours)
+  - CUDA version >= 12.1
   
-```bash
-git clone https://github.com/2gukhyeon/RLAR_tentative.git
-conda create -n calibration python=3.10
-conda activate calibration
-pip install torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu121
-pip install -U pip setuptools wheel
-pip install ninja packaging
-conda install -c nvidia cuda-toolkit=12.1
-pip install -r requirement.txt (not including flash-attention)
-pip install flash-attn --no-build-isolation
-```  
+  ```bash
+  git clone https://github.com/2gukhyeon/RLAR_tentative.git
+  conda create -n calibration python=3.10
+  conda activate calibration
+  pip install torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu121
+  pip install -U pip setuptools wheel
+  pip install ninja packaging
+  conda install -c nvidia cuda-toolkit=12.1
+  pip install -r requirement.txt (not including flash-attention)
+  pip install flash-attn --no-build-isolation
+  ```  
 
 ### TRL Installation 
 ```bash
