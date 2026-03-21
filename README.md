@@ -56,3 +56,33 @@ huggingface-cli login
 your huggingface key!
 Y
 ```
+
+---
+## 🚀 Training
+
+To run post-training (e.g., RLAR, RLVR, RLCR, etc.) on hotpot:
+```bash
+CUDA_VISIBLE_DEVICES=0,1 accelerate launch --num_processes 2 --config_file deepspeed.yaml rl_runner.py --config configs/hotpot/RLAR.yaml
+```
+
+## 📊 Inference
+
+To run inference with our trained model on a single GPU:
+
+```bash
+CUDA_VISIBLE_DEVICES=0 inference_example.py
+```
+
+### 🧪 Evaluation
+
+Run evaluation on a dataset using a config:
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python evaluation.py --config eval_configs/Hotpot-models/trivia.json
+```
+
+For a full eval suite on a single GPU (We already provide the outputs/results from this):
+
+```bash
+bash eval_runs.sh
+```
