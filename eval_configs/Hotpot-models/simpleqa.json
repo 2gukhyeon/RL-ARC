@@ -1,0 +1,34 @@
+[ 
+
+{
+    "dataset_name": "basicv8vc/SimpleQA",
+    "hash_key": "problem",
+    "store_name": "eval_outputs/Hotpot-models-fresh/simpleqa",
+    "gpu_memory_utilization":0.9,
+    "log_path": "results/Hotpot-models-fresh/simpleqa"
+}, 
+{   "name":"Base", 
+"model": "Qwen/Qwen2.5-3B",
+"check_fn": "llm_confidence_verifier",
+"sys_prompt_name": "tac",
+"vllm_task": ["confidence_at_end","ans_at_end"]
+},
+{   "name":"RLVR", 
+"model": "gguk2on/qwen2.5-3B-rlvr_g8_b1024",
+"check_fn": "llm_confidence_verifier",
+"sys_prompt_name": "gen",
+"vllm_task": ["confidence_at_end","ans_at_end"]
+},
+{   "name":"RLCR", 
+"model": "gguk2on/qwen2.5-3B-rlcr_g8_b1024",
+"check_fn": "llm_confidence_verifier",
+"sys_prompt_name": "tabc_long",
+"vllm_task": ["confidence_at_end","ans_at_end"]
+},
+{   "name":"RLAR", 
+"model": "gguk2on/qwen2.5-3B-rlar_g8_b1024",
+"check_fn": "llm_confidence_verifier",
+"sys_prompt_name": "tabc_long_align",
+"vllm_task": ["confidence_at_end","ans_at_end"]
+}
+]
