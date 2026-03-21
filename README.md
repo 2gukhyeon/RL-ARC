@@ -13,7 +13,7 @@ This repository contains the tentative code for the NeurIPS 2026 project.
   - hard disk >= 160 GB
   
 ```bash
-git clone https://github.com/2gukhyeon/RLAR_tentative.git
+git clone https://github.com/2gukhyeon/RLAR_project.git
 your git key!
 cd RLAR_tentative 
 pip install -r requirement.txt
@@ -22,7 +22,7 @@ pip install -r requirement.txt
   - CUDA version >= 12.1
   
   ```bash
-  git clone https://github.com/2gukhyeon/RLAR_tentative.git
+  git clone https://github.com/2gukhyeon/RLAR_project.git
   conda create -n calibration python=3.10
   conda activate calibration
   pip install torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu121
