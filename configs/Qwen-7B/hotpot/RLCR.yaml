@@ -15,10 +15,10 @@ num_processes: 1
 bf16: true
 beta: 0.0
 eval_strategy: "steps"
-eval_steps: 50
+eval_steps: 15
 eval_on_start: false 
 format_pattern: "tabc"
-gradient_accumulation_steps: 64
+gradient_accumulation_steps: 128
 gradient_checkpointing: true
 gradient_checkpointing_kwargs:
   use_reentrant: false
@@ -29,22 +29,22 @@ logging_steps: 1
 logging_strategy: steps
 lr_scheduler_type: constant_with_warmup
 max_prompt_length: 3072
-max_completion_length: 1536
+max_completion_length: 1024
 max_steps: -1
-num_generations: 32
+num_generations: 8
 num_iterations: 1
 num_train_epochs: 1
 overwrite_output_dir: true
 per_device_eval_batch_size: 32
-per_device_train_batch_size: 8
+per_device_train_batch_size: 4
 push_to_hub: true
-hub_model_id: "gguk2on/qwen2.5-7B-rlcr_g32_b512"
+hub_model_id: "gguk2on/qwen2.5-7B-rlcr_g8_b512"
 report_to:
 - wandb
 reward_funcs: ["format","accuracy","brier","mean_confidence","confidence_one_or_zero"]
 reward_weights: [0.5,0.5,0.5,0.000001,0.000001]
 save_strategy: "steps"
-save_steps: 60
+save_steps: 30
 save_total_limit: 1
 scale_rewards: false
 seed: 43
