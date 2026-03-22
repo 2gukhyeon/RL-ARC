@@ -39,7 +39,6 @@ overwrite_output_dir: true
 per_device_eval_batch_size: 32
 per_device_train_batch_size: 4
 push_to_hub: true
-hub_strategy: "every_save"
 hub_model_id: "gguk2on/qwen2.5-3B-rlcr_g8_b1024"
 report_to:
 - wandb
