@@ -1,9 +1,9 @@
 # Model arguments
-model_name_or_path: Qwen/Qwen2.5-3B
-run_name: "RLAR-hotpot"
+model_name_or_path: Qwen/Qwen2.5-7B
+run_name: "RLAR-hotpot_7B"
 output_dir: data/RLAR-hotpot
 model_revision: main
-torch_dtype: float16
+torch_dtype: bfloat16
 attn_implementation: flash_attention_2
 
 # Data training arguments
@@ -12,8 +12,8 @@ dataset_name: mehuldamani/hotpot_qa
 num_processes: 1
 
 # GRPO trainer config
-bf16: false
-fp16: true
+bf16: true
+fp16: false
 beta: 0.0
 eval_strategy: "steps"
 eval_steps: 15
@@ -39,8 +39,7 @@ overwrite_output_dir: true
 per_device_eval_batch_size: 32
 per_device_train_batch_size: 4
 push_to_hub: true
-hub_strategy: "every_save"
-hub_model_id: "gguk2on/qwen2.5-3B-rlar_g8_b1024"
+hub_model_id: "gguk2on/qwen2.5-7B-rlar_g8_b1024"
 report_to:
 - wandb
 reward_funcs: ["format","accuracy","brier","mean_confidence","confidence_one_or_zero"]
