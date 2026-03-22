@@ -1,9 +1,9 @@
 # Model arguments
-model_name_or_path: Qwen/Qwen2.5-7B
-run_name: "RLAR-hotpot_7B"
+model_name_or_path: Qwen/Qwen2.5-3B
+run_name: "RLAR-hotpot"
 output_dir: data/RLAR-hotpot
 model_revision: main
-torch_dtype: bfloat16
+torch_dtype: float16
 attn_implementation: flash_attention_2
 
 # Data training arguments
@@ -12,8 +12,8 @@ dataset_name: mehuldamani/hotpot_qa
 num_processes: 1
 
 # GRPO trainer config
-bf16: true
-fp16: false
+bf16: false
+fp16: true
 beta: 0.0
 eval_strategy: "steps"
 eval_steps: 15
