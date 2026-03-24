@@ -25,7 +25,7 @@ gradient_checkpointing_kwargs:
 hub_strategy: "end"
 learning_rate: 1e-06
 log_level: info
-logging_steps: 5
+logging_steps: 1
 logging_strategy: steps
 lr_scheduler_type: constant_with_warmup
 max_prompt_length: 3072
