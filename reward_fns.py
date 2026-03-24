@@ -167,14 +167,15 @@ def brier_reward(format_pattern,completions,answer,source=None, **kwargs):
             if conf < 0 or conf > 1: # 실행가능성 낮음. 이미 format reawrd에서 걸러졌기 때문이다.
                 matches.append(0)
                 continue
-
-            reward = 1 - (cr - conf) ** 2
+            
+            brier = (cr - conf) ** 2
+            reward = 1 - brier
             
             if format_pattern == "tabc_align": # aligning reasoning and answer
-                align_reward = (conf - float(reasoning_conf))** 2
-                reward = reward - align_reward
-            
-            
+                align_reward = 0.5 * (conf - float(reasoning_conf)) ** 2
+                brier = 0.5 * brier
+                reward = 1 - align_reward - brier
+
             matches.append(reward)
 
         except:
