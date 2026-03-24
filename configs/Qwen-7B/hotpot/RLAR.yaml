@@ -29,7 +29,7 @@ logging_steps: 1
 logging_strategy: steps
 lr_scheduler_type: constant_with_warmup
 max_prompt_length: 3072
-max_completion_length: 1536
+max_completion_length: 1024
 max_steps: -1
 num_generations: 8
 num_iterations: 1
