@@ -62,7 +62,7 @@ Y
 
 To run post-training (e.g., RLAR, RLVR, RLCR, etc.) on hotpot:
 ```bash
-CUDA_VISIBLE_DEVICES=0,1 accelerate launch --num_processes 2 --config_file deepspeed.yaml rl_runner.py --config configs/hotpot/RLAR.yaml
+CUDA_VISIBLE_DEVICES=0,1,2,3 accelerate launch --num_processes 4 --config_file deepspeed.yaml rl_runner.py --config configs/Qwen-7B/hotpot/RLAR.yaml
 ```
 
 ## 📊 Inference
