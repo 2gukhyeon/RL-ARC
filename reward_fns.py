@@ -172,8 +172,10 @@ def brier_reward(format_pattern,completions,answer,source=None, **kwargs):
             reward = 1 - brier
             
             if format_pattern == "tabc_align": # aligning reasoning and answer
-                align_reward = 0.5 * (conf - float(reasoning_conf)) ** 2
-                brier = 0.5 * brier
+                correct_weight = 0.75
+                align_reward = (conf - float(reasoning_conf)) ** 2
+                align_reward = (1-correct_weight) * align_reward
+                brier = correct_weight * brier
                 reward = 1 - align_reward - brier
 
             matches.append(reward)
