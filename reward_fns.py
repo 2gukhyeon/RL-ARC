@@ -173,7 +173,7 @@ def brier_reward(format_pattern,completions,answer,source=None, **kwargs):
             
             if format_pattern == "tabc_align": # aligning reasoning and answer
                 if cr > 0.5: # correct case
-                    align_weight = 0.2
+                    align_weight = 0.3
                     align_reward = align_weight * (conf - float(reasoning_conf))**2
                     reward = 1 - brier - align_reward
                 else: # incorrect case
