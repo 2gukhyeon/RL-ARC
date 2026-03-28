@@ -209,6 +209,14 @@ def main(global_args,local_configs):
                     conf_pattern = r"<confidence>(.*?)</confidence>"
                     conf_matches = re.findall(conf_pattern, output.outputs[i].text, re.DOTALL | re.MULTILINE)
                     last_confidence = conf_matches[-1] if conf_matches else ""
+                    if last_confidence == "": # for RLAR
+                        align_conf_pattern = r"<reasoning_confidence>(.*?)</reasoning_confidence>\s*<answer_confidence>(.*?)</answer_confidence>"
+                        dual_matches = re.findall(align_conf_pattern, output.outputs[i].text, re.DOTALL | re.MULTILINE)
+                        if dual_matches:
+                            _, last_confidence = dual_matches[-1]
+                        else:
+                            last_confidence = ""
+
                     ## ONLY IF NO CONFIDENCE IS FOUND, USE THE CONFIDENCE FROM THE VERB_OUTPUTS
                     if last_confidence == "":
                         last_confidence = verb_outputs[counter].outputs[0].text
