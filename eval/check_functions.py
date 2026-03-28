@@ -19,6 +19,15 @@ def confidence_extractor(response, **kwargs):
     conf_matches = re.findall(conf_pattern, response, re.DOTALL | re.MULTILINE)
     # Get the last confidence, if exists
     last_confidence = conf_matches[-1] if conf_matches else ""
+
+    if last_confidence == "": # for RLAR
+        align_conf_pattern = r"<reasoning_confidence>(.*?)</reasoning_confidence>\s*<answer_confidence>(.*?)</answer_confidence>"
+        dual_matches = re.findall(align_conf_pattern, response, re.DOTALL | re.MULTILINE)
+        if dual_matches:
+            _, last_confidence = dual_matches[-1]
+        else:
+            last_confidence = ""
+
     if last_confidence == "":
         return 0, 0.0
     else:
