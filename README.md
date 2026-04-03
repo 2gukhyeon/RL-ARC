@@ -65,6 +65,11 @@ To run post-training (e.g., RLAR, RLVR, RLCR, etc.) on hotpot:
 CUDA_VISIBLE_DEVICES=0,1,2,3 accelerate launch --num_processes 4 --config_file deepspeed.yaml rl_runner.py --config configs/Qwen-7B/hotpot/RLAR.yaml
 ```
 
+To run post-training (e.g., RLAR, RLVR, RLCR, etc.) on math:
+```bash
+CUDA_VISIBLE_DEVICES=0,1,2,3 accelerate launch --num_processes 4 --config_file deepspeed.yaml rl_runner.py --config configs/Qwen-7B/math/RLAR.yaml
+```
+
 ## 📊 Inference
 
 To run inference with our trained model on a single GPU:
