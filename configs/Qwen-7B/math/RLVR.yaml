@@ -28,7 +28,6 @@ log_level: info
 logging_steps: 1
 logging_strategy: steps
 lr_scheduler_type: linear
-mask_truncated_completions: true
 max_prompt_length: 1024
 max_completion_length: 4096
 max_steps: -1
