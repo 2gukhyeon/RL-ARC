@@ -4,7 +4,7 @@ import copy
 from dataset_processing import process_dataset
 from vllm import LLM, SamplingParams
 from transformers import  AutoTokenizer, AutoModelForSequenceClassification
-from eval.eval_utils import hash_dataset
+from eval.eval_utils import hash_dataset, load_and_clean
 from eval.eval_args import GlobalArgs, LocalConfig
 from eval.check_functions import confidence_verifier, llm_confidence_verifier 
 import gc,os , re, math, json
@@ -16,9 +16,31 @@ def main(global_args,local_configs):
     try: 
         dataset = datasets.load_from_disk("./"+global_args.dataset_name)
     except:
-        dataset = load_dataset(global_args.dataset_name)
+        data_path = "./" + global_args.dataset_name
+
+        # ✅ 추가: 폴더 안에 processed.json 있으면 로드
+        if os.path.isdir(data_path):
+            json_path = os.path.join(data_path, "processed.json")
+            if os.path.exists(json_path):
+                dataset = load_dataset("json", data_files=json_path)
+            else:
+                raise FileNotFoundError(f"No processed.json found in {data_path}")
+
+        # ✅ json 파일 직접 들어온 경우
+        elif data_path.endswith(".json"):
+            dataset = load_dataset("json", data_files=data_path)
+
+        # 기존 HF dataset
+        else:
+            dataset = load_dataset(global_args.dataset_name)
     dataset = dataset[global_args.split]
     dataset = dataset.map(lambda x: hash_dataset(x,global_args.hash_key))
+    # dataset = dataset.map(
+    # lambda x: {
+    #     **x,
+    #     "question": x["problem"].split("Supporting Information:")[0].strip()
+    # }
+    # )
     if global_args.sample_size is not None:
         dataset = dataset.select(range(global_args.sample_size))
     final_dataset = copy.deepcopy(dataset)
@@ -125,7 +147,8 @@ def main(global_args,local_configs):
                     output.outputs[0].text = output.outputs[0].text.split("<confidence>")[0]
 
             #now append the generated text to the original prompt
-            texts = [f"\n\nPROBLEM: {local_dataset[i][ques_key]}\n\nEND OF PROBLEM\n\nMODEL'S RESPONSE: {output.outputs[0].text}\n\nEND OF RESPONSE\n\n" for i, output in enumerate(outputs)]
+            texts = [f"\n\nPROBLEM: {local_dataset[i][ques_key]}\n\nEND OF PROBLEM\n\nMODEL'S RESPONSE: {output.outputs[0].text}\n\nEND OF RESPONSE\n\n" for i, output in enumerate(outputs)] # table1
+            # texts = [f"\n\nPROBLEM: {load_and_clean(local_dataset[i][ques_key])}\n\nEND OF PROBLEM\n\nMODEL'S RESPONSE: {output.outputs[0].text}\n\nEND OF RESPONSE\n\n" for i, output in enumerate(outputs)] # figure1
             print("Gen and Classify Samples for config: ", name)
             print(texts[0])
             print(texts[1])
@@ -256,26 +279,77 @@ def main(global_args,local_configs):
             gc.collect()
         except:
             pass
+        
+    
+    ##### CHECK FUNCTION #####
+    # 1. confidence_verifier uses symbolic parsing such as exact match, math-verify (hugging face)
+    # 2. llm_confidence_verifier uses a LLM to check the answer. 
 
-        ##### CHECK FUNCTION #####
-        # 1. confidence_verifier uses symbolic parsing such as exact match, math-verify (hugging face)
-        # 2. llm_confidence_verifier uses a LLM to check the answer. 
-
-        if config.check_fn is not None:
-            check_fn = config.check_fn
-            if check_fn == "confidence_verifier":
-                label_dict, metrics = confidence_verifier(local_dataset,config,**config.check_fn_args)
-            elif check_fn == "llm_confidence_verifier":
-                label_dict, metrics = llm_confidence_verifier(local_dataset,config,**config.check_fn_args)
-            
-            all_metrics[config.name] = metrics
-            for k,v in label_dict.items():
-                if available:
-                    final_dataset = final_dataset.remove_columns([k]) 
-                final_dataset = final_dataset.add_column(k,v)
-                local_dataset = local_dataset.add_column(k,v)
+    if config.check_fn is not None:
+        check_fn = config.check_fn
+        if check_fn == "confidence_verifier":
+            label_dict, metrics, cr_labels = confidence_verifier(local_dataset,config,**config.check_fn_args)
+        elif check_fn == "llm_confidence_verifier":
+            label_dict, metrics, cr_labels = llm_confidence_verifier(local_dataset,config,**config.check_fn_args)
+        
+        all_metrics[config.name] = metrics
+        for k,v in label_dict.items():
+            if available:
+                final_dataset = final_dataset.remove_columns([k]) 
+            final_dataset = final_dataset.add_column(k,v)
+            local_dataset = local_dataset.add_column(k,v)
 
     ##### END OF FOR LOOP AND CONFIG EVALUATION #####
+
+    save_results = []
+
+    for idx, output in enumerate(outputs):
+        try:
+            question = local_dataset[idx]["problem"] # with context (Hotpot)
+        except:
+            question = local_dataset[idx]["question"] # without context (Hotpot)
+        question = question.split("\n\n")[0].strip()
+        gt_answer = (
+            local_dataset[idx].get("answer") or
+            local_dataset[idx].get("solution") or
+            local_dataset[idx].get("final_answer") or
+            local_dataset[idx].get("label") or
+            ""
+        )
+        cr_match = int(cr_labels[idx])
+        for i in range(config.n):
+            text = output.outputs[i].text
+
+            # answer 추출
+            ans_match = re.findall(r"<answer>(.*?)</answer>", text, re.DOTALL)
+            answer = ans_match[-1].strip() if ans_match else ""
+
+            # confidence 추출
+            conf_match = re.findall(r"<confidence>(.*?)</confidence>", text, re.DOTALL)
+            confidence = conf_match[-1].strip() if conf_match else ""
+            if confidence == "": # for RLAR
+                align_conf_pattern = r"<reasoning_confidence>(.*?)</reasoning_confidence>\s*<answer_confidence>(.*?)</answer_confidence>"
+                dual_matches = re.findall(align_conf_pattern, output.outputs[i].text, re.DOTALL | re.MULTILINE)
+                if dual_matches:
+                    _, confidence = dual_matches[-1]
+                else:
+                    confidence = ""
+            save_results.append({
+                "idx": idx,
+                "question": question,
+                "gold_label": gt_answer,
+                "answer": answer,
+                "is_correct": cr_match,
+                "confidence": confidence
+            })
+
+    # 저장
+    save_path = os.path.join(global_args.log_path if global_args.log_path else ".", f"{config.name}_outputs.json")
+
+    with open(save_path, "w") as f:
+        json.dump(save_results, f, indent=4, ensure_ascii=False)
+
+    print(f"Saved JSON to {save_path}")
 
     ##### PRINT ALL METRICS and LOG #####
         
