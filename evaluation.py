@@ -343,13 +343,7 @@ def main(global_args,local_configs):
                 "confidence": confidence
             })
 
-    # 저장
-    save_path = os.path.join(global_args.log_path if global_args.log_path else ".", f"{config.name}_outputs.json")
-
-    with open(save_path, "w") as f:
-        json.dump(save_results, f, indent=4, ensure_ascii=False)
-
-    print(f"Saved JSON to {save_path}")
+    
 
     ##### PRINT ALL METRICS and LOG #####
         
@@ -372,6 +366,14 @@ def main(global_args,local_configs):
         with open(global_args.log_path+"/metrics.json", "w") as f:
             json.dump(all_metrics, f, indent=4)
 
+    # 저장 (정성 분석)
+    save_path = os.path.join(global_args.log_path if global_args.log_path else ".", f"{config.name}_outputs.json")
+
+    with open(save_path, "w") as f:
+        json.dump(save_results, f, indent=4, ensure_ascii=False)
+
+    print(f"Saved JSON to {save_path}")
+    
     # final_dataset.push_to_hub(global_args.store_name, private=True)
     if updated:
         final_dataset.save_to_disk(global_args.store_name)
