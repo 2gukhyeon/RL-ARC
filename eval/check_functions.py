@@ -69,6 +69,7 @@ def gen_correctness_reward(completions, answer, **kwargs):
 
     for content, e in zip(completion_contents, eval_contents):
         # Get all <answer>...</answer> occurrences
+        # print(content)
         ans_matches = re.findall(ans_pattern, content,
                                  re.DOTALL | re.MULTILINE)
         # Get the last answer, if exists
@@ -80,6 +81,19 @@ def gen_correctness_reward(completions, answer, **kwargs):
         matches.append(float(label))
 
     return matches
+
+def extract_answer(text):
+    """
+    # \boxed{204} → 204
+    """
+    if text is None:
+        return None
+    text = str(text)
+
+    text = re.sub(r'\\boxed\{(\d+)\}', r'\1', text)
+
+    nums = re.findall(r'-?\d+', text)
+    return str(nums[-1]) if nums else None
 
 def confidence_verifier(local_dataset, config, format_fn="confidence_format", format_pattern="tabc", **kwargs):
     label_dict = {f"{config.name}-evals": []}
@@ -103,7 +117,10 @@ def confidence_verifier(local_dataset, config, format_fn="confidence_format", fo
         eval_list, c_len_list, conf_list, conf_format_list = [], [], [], []
         for j in range(n):
             pred_response = local_dataset[i][f"{config.name}-output_{j}"]
-            answer = local_dataset[i]["answer"]
+            try:
+                answer = local_dataset[i]["answer"]
+            except:
+                answer = extract_answer(local_dataset[i]["solution"]) # aime24
             pred = [{"role": "assistant", "content": pred_response}]
 
             args = {"completions": [pred], "answer": [answer]}
@@ -133,7 +150,7 @@ def confidence_verifier(local_dataset, config, format_fn="confidence_format", fo
         config.pass_k_vals.append(1)
     for k in config.pass_k_vals:
         if k <= n:
-            pass_k = compute_pass_n(evals, k)
+            pass_k, responses = compute_pass_n(evals, k)
             metrics[f"pass@{k}"] = pass_k
 
     ### END OF COMPUTE PASS@K ###
@@ -169,7 +186,7 @@ def confidence_verifier(local_dataset, config, format_fn="confidence_format", fo
     print(f"Metrics of {config.name} =")
     for k, v in metrics.items():
         print(f"{k}: {v}")
-    return label_dict, metrics
+    return label_dict, metrics, responses
 
 
 def llm_confidence_verifier(local_dataset, config, judge_model="meta-llama/Llama-3.1-8B-Instruct", format_fn="confidence_format", **kwargs):
@@ -287,7 +304,7 @@ def llm_confidence_verifier(local_dataset, config, judge_model="meta-llama/Llama
         config.pass_k_vals.append(1)
     for k in config.pass_k_vals:
         if k <= n:
-            pass_k = compute_pass_n(evals, k)
+            pass_k, _ = compute_pass_n(evals, k)
             metrics[f"pass@{k}"] = pass_k
 
     if class_outputs is not None:
@@ -323,4 +340,4 @@ def llm_confidence_verifier(local_dataset, config, judge_model="meta-llama/Llama
 
     del llm
     gc.collect()
-    return label_dict, metrics
+    return label_dict, metrics, responses
