@@ -1,15 +1,35 @@
-from system_prompts import TABC_LONG_PROMPT, TABC_PROMPT, GEN_PROMPT
+from system_prompts import TABC_LONG_PROMPT, TABC_PROMPT, GEN_PROMPT, TABC_LONG_ALIGN_PROMPT, TABC_ALIGN_PROMPT
 from vllm import LLM, SamplingParams
 from transformers import AutoTokenizer
+import argparse
+
+parser = argparse.ArgumentParser(description="Inference")
+parser.add_argument("--method", type=str, default="rlcr",  help="Model name")
+args = parser.parse_args()
+method = args.method
+
+if method == "rlcr_hotpot":
+    model = "gguk2on/qwen2.5-7B-rlcr_g8_b512" 
+    prompt_name = "TABC_LONG_PROMPT" 
+elif method == "rlar_hotpot":
+    model = "gguk2on/qwen2.5-7B-rlar_g8_b512_0.40.15"
+    prompt_name = "TABC_LONG_ALIGN_PROMPT" 
+elif method == "rlvr_hotpot":
+    model = "gguk2on/qwen2.5-7B-rlvr_g8_b512" 
+    prompt_name = "GEN_PROMPT" 
+elif method == "rlcr_math":
+    model = "gguk2on/qwen2.5-7B-rlcr_g32_b384_math"
+    prompt_name = "TABC_PROMPT"
+elif method == "rlar_math":
+    # model = "gguk2on/qwen2.5-7B-rlar_g8_b512_0.40.15" # rollout: 8
+    model = "gguk2on/qwen2.5-7B-rlar_g32_b384_math" # rollout: 32
+    prompt_name = "TABC_ALIGN_PROMPT"  
+elif method == "rlvr_math":
+    model = "gguk2on/qwen2.5-7B-rlvr_g8_b384_math"
+    prompt_name = "GEN_PROMPT"   
 
 
-###CHOOSE APPROPRIATE MODEL
-model = "mehuldamani/hotpot-v2-brier-7b-no-split"   ## Refer to README.md for available models, note that classifier models are not supported in this file
-# model = "./data/RLCR-hotpot/checkpoint-60"
-##CHOOSE APPROPRIATE SYSTEM PROMPT
-prompt_name = "TABC_LONG_PROMPT"                    ## Refer to README.md for corresponding system prompts
-
-question = "Which popular dessert was invented at the Hungry Monk in Alfriston, Sussex?" 
+question = "The 2011–12 VCU Rams men's basketball team, led by third year head coach Shaka Smart, represented Virginia Commonwealth University which was founded in what year?" 
 
 if prompt_name == "TABC_LONG_PROMPT":
     sys_prompt = TABC_LONG_PROMPT
@@ -17,6 +37,10 @@ elif prompt_name == "TABC_PROMPT":
     sys_prompt = TABC_PROMPT 
 elif prompt_name == "GEN_PROMPT":
     sys_prompt = GEN_PROMPT
+elif prompt_name == "TABC_LONG_ALIGN_PROMPT":
+    sys_prompt = TABC_LONG_ALIGN_PROMPT
+elif prompt_name == "TABC_ALIGN_PROMPT":
+    sys_prompt = TABC_ALIGN_PROMPT
 
 user_format = (
                 f"\n\nPROBLEM: {question}\n\n"
