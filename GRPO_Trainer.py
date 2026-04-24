@@ -45,7 +45,7 @@ from transformers import (
 from transformers.integrations.deepspeed import is_deepspeed_zero3_enabled
 from transformers.trainer_utils import seed_worker
 from transformers.utils import is_datasets_available, is_peft_available
-
+from system_prompts import llama_format_prompt
 from trl import apply_chat_template, is_conversational, maybe_apply_chat_template
 from trl.import_utils import is_vllm_available
 from trl.models import create_reference_model, unwrap_model_for_generation
