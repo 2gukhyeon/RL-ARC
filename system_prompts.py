@@ -1,4 +1,4 @@
-def format_prompt(example):
+def llama_format_prompt(example):
     question = example["prompt"]  # 또는 example["question"]
 
     return f"""<|start_header_id|>system<|end_header_id|>
