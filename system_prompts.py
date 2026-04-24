@@ -1,16 +1,18 @@
 def llama_format_prompt(example):
-    question = example["prompt"]  # 또는 example["question"]
+    messages = example['prompt']
 
-    return f"""<|start_header_id|>system<|end_header_id|>
-    You are a helpful assistant.
-    <|eot_id|>
-    
-    <|start_header_id|>user<|end_header_id|>
-    {question}
-    <|eot_id|>
-    
-    <|start_header_id|>assistant<|end_header_id|>
-    """
+    text = ""
+    for m in messages:
+        role = m["role"]
+        content = m["content"]
+
+        text += f"<|start_header_id|>{role}<|end_header_id|>\n"
+        text += f"{content.strip()}\n"
+        text += "<|eot_id|>\n"
+
+    text += "<|start_header_id|>assistant<|end_header_id|>\n"
+
+    return text
     
 TABC_PROMPT = (
     "A conversation between User and Assistant. The user asks a question, and the Assistant solves it. The assistant "
