@@ -1,5 +1,17 @@
-LLAMA_TEMPLATE = "<|start_header_id|>system<|end_header_id|>\n{system_prompt}\n<|eot_id|>\n\n<|start_header_id|>user<|end_header_id|>\n{question}\n<|eot_id|>\n\n<|start_header_id|>assistant<|end_header_id|>"
+def format_prompt(example):
+    question = example["prompt"]  # 또는 example["question"]
 
+    return f"""<|start_header_id|>system<|end_header_id|>
+    You are a helpful assistant.
+    <|eot_id|>
+    
+    <|start_header_id|>user<|end_header_id|>
+    {question}
+    <|eot_id|>
+    
+    <|start_header_id|>assistant<|end_header_id|>
+    """
+    
 TABC_PROMPT = (
     "A conversation between User and Assistant. The user asks a question, and the Assistant solves it. The assistant "
     "first thinks about the reasoning process in the mind, provides the user with the final answer, then analyzes its confidence about the solution and then provides the user with its confidence level. "
