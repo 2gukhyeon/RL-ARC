@@ -552,7 +552,8 @@ class CustomTrainer(Trainer):
         mode = "train" if self.model.training else "eval"
 
         prompts = [x["prompt"] for x in inputs]
-        prompts_text = [maybe_apply_chat_template(example, self.processing_class)["prompt"] for example in inputs]
+        # prompts_text = [maybe_apply_chat_template(example, self.processing_class)["prompt"] for example in inputs] # qwen2.5-base
+        prompts_text = [format_prompt(example) for example in inputs] # llama-3.1-8B
         prompt_inputs = self.processing_class(
             prompts_text, return_tensors="pt", padding=True, padding_side="left", add_special_tokens=False
         )
@@ -646,7 +647,8 @@ class CustomTrainer(Trainer):
                 ):  # Module instead of PretrainedModel for compat with compiled models
                     if is_conversational(inputs[0]):
                         messages = [{"messages": p + c} for p, c in zip(prompts, completions)]
-                        texts = [apply_chat_template(x, reward_processing_class)["text"] for x in messages]
+                        # texts = [apply_chat_template(x, reward_processing_class)["text"] for x in messages] # qwen2.5-base
+                        texts = [format_prompt(example) for example in inputs] # llama-3.1-8B
                     else:
                         texts = [p + c for p, c in zip(prompts, completions)]
                     reward_inputs = reward_processing_class(
