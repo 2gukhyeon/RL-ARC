@@ -5,6 +5,15 @@ from sklearn.metrics import roc_curve, auc
 import re
 import string
 
+def load_and_clean(text):    
+    """
+    for evaluating reasoning impact
+    """
+    cleaned_text = text.split("Your answer will be verified with exact match score.")[0].strip()
+    
+    return cleaned_text
+
+
 def normalize_answer(s):
 
     def remove_articles(text):
@@ -41,7 +50,7 @@ def hash_dataset(example,key):
 
 def compute_pass_n(evals,k):
     n = len(evals[0])  
-    corrects,totals = [],[] 
+    corrects,totals, cr_match = [],[],[]
     for i in range(len(evals)):
         eval_list = evals[i]
         #count number of 1s in eval_list
@@ -49,9 +58,10 @@ def compute_pass_n(evals,k):
         for j in range(n):
             if eval_list[j] == 1:
                 count += 1
+        cr_match.append(count)
         corrects.append(count)
         totals.append(n)
-    return estimate_pass_at_k(totals,corrects,k).mean()
+    return estimate_pass_at_k(totals,corrects,k).mean(), cr_match
 
 def estimate_pass_at_k(num_samples, num_correct, k):
     """Estimates pass@k of each problem and returns them in an array."""
