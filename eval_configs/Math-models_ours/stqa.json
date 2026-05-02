@@ -1,0 +1,35 @@
+[ 
+
+{
+    "dataset_name": "data/strategyqa",
+    "hash_key": "problem",
+    "store_name": "eval_outputs/Math-models-fresh/strategyqa",
+    "gpu_memory_utilization":0.9,
+    "split": "train",
+    "log_path": "results/Math-models-fresh/strategyqa"
+}, 
+{   "name":"Base", 
+"model": "Qwen/Qwen3-8B",
+"check_fn": "llm_confidence_verifier",
+"sys_prompt_name": "tac",
+"vllm_task": ["confidence_at_end","ans_at_end"]
+},
+{   "name":"RLVR", 
+"model": "gguk2on/qwen3-8B-rlvr_g8_b384_math",
+"check_fn": "llm_confidence_verifier",
+"sys_prompt_name": "gen",
+"vllm_task": ["confidence_at_end","ans_at_end"]
+},
+{   "name":"RLCR", 
+"model": "gguk2on/qwen3-8B-rlcr_g8_b384_math",
+"check_fn": "llm_confidence_verifier",
+"sys_prompt_name": "tabc",
+"vllm_task": ["confidence_at_end","ans_at_end"]
+},
+{   "name":"RLAR", 
+"model": "gguk2on/qwen3-8B-rlar_g8_b384_math",
+"check_fn": "llm_confidence_verifier",
+"sys_prompt_name": "tabc_align",
+"vllm_task": ["confidence_at_end","ans_at_end"]
+}
+]
