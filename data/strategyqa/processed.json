@@ -1,0 +1,918 @@
+[
+    {
+        "problem": "Will the Albany in Georgia reach a hundred thousand occupants before the one in New York?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Is the language used in Saint Vincent and the Grenadines rooted in English?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Is greed the most prevalent of the Seven Deadly Sins?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Would the top of Mount Fuji stick out of the Sea of Japan? \nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Was Lil Jon's top ranked Billboard song a collaboration with a member of The Lox?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Is Miami a city on the American West Coast?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Can the Swiss Guard fill the Virginia General Assembly chairs?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Did any country in Portuguese Colonial War share Switzerlands role in WWII?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Would a Pict be confused by Old English?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Could Lil Wayne legally operate a vehicle on his own at the beginning of his career?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Are you likely to find a crucifix in Karachi?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Was a person sold a Creative Commons License for Boticelli's The Birth of Venus ripped off?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Could ten gallons of seawater crush a six year old?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Do more anchovy live in colder temperature waters than warmer?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Is 3D printing able to make adenovirus?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Would George Fox support stoning?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Is watching  Star Wars necessary to know who Darth Vader is?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Can a computer be programmed entirely in Boolean algebra?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Did Christina Aguilera turn her chair around for Kelly Clarkson on The Voice?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Would Amy Winehouse's death have been prevented with Narcan?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Does a mongoose have natural camouflage for desert?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "If someone loves buffalo wings do they enjoy capsaicin?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Was Bruce Lee absent from the 1964 University of Washington graduation ceremony?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Could Brooke Shields succeed at University of Pennsylvania?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Would students at Marist have to petition to get a rowing team?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Could a hundred thousand lolcats fit on a first generation iPhone?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Does Rusev have to worry about human overpopulation in his homeland?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Does Princess Peach's dress resemble a peach fruit?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Are psychiatric patients welcome to join the United States Air Force?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Can I hold Bing in a basket?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Does the central processing unit usually have a dedicated fan?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Can Cyril Ramaphosa become Secretary General of NATO?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Is Brooklyn known for its bread products?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Did the Royal Air Force fight in the Boxer Rebellion?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Did François Mitterrand serve under Napoleon Bonapart in the French army?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Can amoebas get cancer?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Is Cholera alive?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Would someone typically confuse a sweet potato with a pineapple?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Would it be common to find a penguin in Miami?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Are tumors in the lymph nodes ignorable?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Did Spiderman fight against Falcon in the MCU?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Is Shiva's divine dance an ancient physical fitness pose?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Do hyenas appear in a Broadway musical?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Would an owl monkey enjoy a strawberry?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Can a snake swallow an M60 Patton?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Would Avengers Comics be out of place in a DC Comics store?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Can the Persian Gulf fit in New Jersey?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Is Nicole Kidman ideal choice to play Psylocke based on height and weight?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Could Bernie Sanders visit the Metropolitan Museum of Art twenty times for under two hundred dollars?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Can Planned Parenthood tell your University that you have Herpes simplex virus?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Would Achilles dominate Legolas in a hypothetical fight?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Is Bucharest located south of Egypt?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Will a rock float in the atmosphere of Earth?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Have rhinoceroses been killed to improve human sex lives?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Does ABBA have similar gender configuration to The Mamas & The Papas?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Would the author of Little Women have remembered the ratification of the 13th Amendment?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Are the majority of Reddit users familiar with the Pledge of Allegiance?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Do children send their Christmas letters to the South Pole?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Did Maroon 5 go on tour with Nirvana?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Would an Evander Holyfield 2020 boxing return set age record?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Does Post Malone have a fear of needles?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Did US President during Spanish-American War suffer similar demise to Abraham Lincoln?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Was Eve involved in an incestuous relationship?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Lil Wayne similar real name rapper has over quadruple Wayne's Grammy awards?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Would nickel boil in the outer core of the earth?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Was Dorothea Wendling from same place Porsche originated?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Can surgery prevent an existential crisis?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Was Al-Farabi a student of the Great Sheikh?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Is it dangerous to consume chlorine when mixed with sodium?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Did Brazilian jiu-jitsu Gracie founders have at least a baker's dozen of kids between them?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Did Mozart ever buy anything from Dolce & Gabbana?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Would an Orthodox Presbyterian object to 1700s judge's attire?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Is Lines on the Antiquity of Microbes briefer than any haiku?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Do the directors of The Matrix advocate for transgender rights?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Would a northern fur seal pass a driving test?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Will more people go in and out of Taco Bell than a Roy Rogers each year?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Would it be unusual to find a yellow perch in the Red Sea?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Would General Zod prefer an iPhone over a Samsung Galaxy S4?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Did Neanderthals use arithmetic?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Was animal in You're a Good Sport, Charlie Brown, hypothetically a hound?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Are any of J.K. Rowling's books in the genre of And Then There Were None?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Did Jay-Z ever collaborate with Louis Armstrong?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Are lengths measured in metres in the UK?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Did Christopher Columbus sail representing a different country than his original home?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Are blue lips normal?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Did Jon Brower Minnoch suffer from anorexia nervosa?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Would Othello be Shakespeare's play to buy Scheherazade most time with king?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Was Hillary Clinton's deputy chief of staff in 2009 baptised?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Is a Cassowary safer pet than a crane?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Could you drive from New England to a Sainsbury's?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Would P. G. Wodehouse be taught in second grade?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Is tobacco use made to seem enjoyable in Alice's Adventures in Wonderland?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Can Simon Cowell vote for the next Supreme Court judge?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Could all the unemployed people due to 1933 Great Depression fit in Tiger Stadium?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Can an adult male stand on top Donatello's bronze David and touch the Sistine Chapel ceiling?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Was England directly involved in the Arab-Israeli conflict?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Did Alice's Adventures in Wonderland inspire Macbeth?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Is the Asian black bear multicolored?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Are pirate lieutenants like navy lieutenants?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Should a finished website have lorem ipsum paragraphs?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Does the land in close proximity to beaver dams suffer?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Would it be difficult for Will Ferrell to win Empire Award for Best Newcomer?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Did Cynthia Powell celebrate a silver anniversary with John Lennon?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Did Al Pacino act in a movie during World War II?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Is the Gujarati script the same category of script as Kanji?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Was Morris County named after a chief justice?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Can the Very Large Telescope observe the largest mountain on Earth?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Is cow methane safer for environment than cars?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Is Morocco an ideal location for water skiing?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Could one Amazon share ever buy twenty year Netflix subscription?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Is there radiation where Nikola Tesla once worked?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Could Al Capone have read works from the Harlem Renaissance?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Would members of Blue Lives Matter support every element of Grand Theft Auto III?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Does New Year's Day always occur on a Wednesday?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Could a nymph tick pass through a standard hole punch?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Can an art dealer buy Boeing 737-800 with a Da Vinci painting?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Should Peter Griffin be an expert at the craft of brewing?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Could you drive a Rowe 550 to the 2008 Summer Olympics?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Was Amy Winehouse a fan of Star Wars: Rogue One?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Is Jesse W. Moore a potential recipient of a Snoopy-themed award from NASA?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Would a honey badger fit inside an oven?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Is chaff produced by hydropower?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Does Paulo Coelho's wife make a living through speech?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Can a lifeboat rescue people in the Hooke Sea?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Is Fiat Chrysler associated with Japanese cars?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Would Hades and Osiris hypothetically compete for real estate in the Underworld?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Does Orange County, California require airplanes to be quiet?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Was the Parc des Princes fully operational during June of 2020?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Is retail a job anybody can be suited for?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Would an explosion at a gunpowder storage facility result in a supersonic shock wave?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Can you buy chlorine at a dollar store?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Are saltwater crocodiles related to alligators?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Would Persephone be a good consultant to a landscape architect?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Would the crew of Apollo 15 have difficulty riding a unicycle?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Are ropes required to operate a frigate?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Does Jason have anything in common with Dr. Disrespect?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Should a Celiac sufferer avoid spaghetti?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Do Koalas prefer Eucalyptus over meat?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Would a body builder prefer an elk burger over a beef burger?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Can you transport a coin along a sea of mercury?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Would Bugs Bunny harm an olive tree in the real world?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Are Brussels sprout particularly good for adrenal fatigue?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Does Family Guy take place on the American West Coast?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Can someone in Uberlandia work for Mitsubishi?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Would Hannah Nixon be proud of Richard Nixon following the Watergate scandal?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Could Eddie Murphy dial 911 in a car as a young child?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Would Mount Wycheproof be a breeze for Edmund Hillary?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Are flag of Gabon colors found in rainbow?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Do mollymawks live where albatrosses cannot?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Is a curling iron necessary in curling?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Are emus related to elks?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Would the chef at La Grenouille find salsa to be a strange request?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Are System of a Down opposed to globalization?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Can someone from New England profit by growing coffee?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Does table tennis use prime numbers?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Is being 5 year Capital One Venture member more cost effective than being in Church of Satan?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Did Beethoven enjoy listening to EDM?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Is Metallica protective over their music?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Has Kelly Clarkson outsold season 4 American Idol winner?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Do black-tailed jackrabbits fear the European wildcat?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Could Carl Friedrich Gauss speak to someone 100 miles away?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Is Lionel Richie related to Sheila E?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Does the FDA require sell by dates using Roman Numerals?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Did travelers sing sea shanties on the Oregon Trail?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Would someone with leukophobia enjoy looking at the Flag of the United States?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Did Teri Hatcher last twice as many episodes on Desperate Housewives as her Superman show?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Do white blood cells outnumber red blood cells in the human body?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Was John George Bice's birthplace near Cornwall?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Does the history of Europe include the age of dinosaurs?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Would Paul Bunyan hypothetically be a poor choice for an urban planner?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Are all the elements plants need for photosynthesis present in atmosphere of Mars?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Did Bill Nye vote for Franklin Delano Roosevelt?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Is the use of the word Gypsy by non-Romani people considered okay?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Was Land of Israel in possession of an Islamic empire in 16th century?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Would 7 zucchini's satisfy potassium USDA daily recommendation?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Was the British car, the Mini, the first car manufactured?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Can Paprika be made without a dehydrator?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Can a Bengal cat survive eating only pancakes?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Could a wandering albatross fly from Bucharest to New York City without a rest?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Does the New York Public Library sell Alpo products?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Is Tony Bennett's middle name shared by a former UFC champion?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Would a black widow woman have use for peaches?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Are people more likely than normal to get sunburn at Burning Man?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Did Rahul Dravid ever kick a field goal?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Does an individual oceanographer study many sciences?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Was Superhero fiction invented in the digital format?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Could two newborn American Black Bear cubs fit on a king size bed?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Are Aldi's foods discounted due to being out of date?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Are ground bell peppers the main ingredient of black pepper?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Does taking ukemi halt kinetic energy?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Is it hard to get a BLT in Casablanca?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Would the yearly precipitation on Snowdon submerge an upright bowling pin?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Was a woman Prime Minister directly before or after Stanley Baldwin?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Would  bald eagle deliver an urgent message before B-52?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Can professional boxers expect to have low dental bills?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Did Dr. Seuss live a tragedy free life?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Were Jackson Pollock's parents not required to say The Pledge of Allegiance as children?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Is San Diego County the home of a Shamu?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Is the Flying Spaghetti Monster part of an ancient pantheon?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Does Elizabeth II reign over the Balearic Islands?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Did the Football War last at least a month?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Was Lorenzo de Medici's patronage of Da Vinci exclusive?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Is anyone at the Last Supper celebrated in Islam?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Would a Bengal cat be afraid of catching a fish?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Did Benito Mussolini wear bigger shoes than Hafþór Björnsson?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Would Bobby Jindal's high school mascot eat kibble?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Is the United States Capitol located near the White House?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Would it be hard to get toilet paper if there were no loggers?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Was Iggy Pop named after his father?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Can preventive healthcare reduce STI transmission?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Do inanimate objects come alive in Beauty and the Beast?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Would Bandy be likely to become popular in Texas?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "For bone growth, is kale more beneficial than spinach?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Does walking across Amazonas put a person's life at risk?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Did original Nintendo have games in same format as Playstation 3?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Is the Fibonacci number sequence longer than every number discovered in Pi?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Would a Germaphobia be able to participate in Judo?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Is Autumn a good time to collect bear pelts in US?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Are there Pink music videos that are triggering for eating disorder patients?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Did Al Unser Jr. win the Space Race?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Is World of Warcraft heavier than a loaf of bread?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Did Electronic Arts profit from Metroid sales?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Would a kindergarten teacher make a lesson of the New Testament?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Did Amy Winehouse always perform live perfectly?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Are there bones in an anchovy pizza?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Can you hide a basketball in a sand cat's ear?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    },
+    {
+        "problem": "Did Ivan the Terrible's father and grandfather have nicer nicknames?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Are amoebas safe from breast cancer?\nA) True\nB) False\n",
+        "answer": "Option A which is : True"
+    },
+    {
+        "problem": "Was Pi an acceptable number of children in 1980s China?\nA) True\nB) False\n",
+        "answer": "Option B which is : False"
+    }
+]
