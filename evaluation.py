@@ -281,67 +281,76 @@ def main(global_args,local_configs):
             pass
         
     
-    ##### CHECK FUNCTION #####
-    # 1. confidence_verifier uses symbolic parsing such as exact match, math-verify (hugging face)
-    # 2. llm_confidence_verifier uses a LLM to check the answer. 
+        ##### CHECK FUNCTION #####
+        # 1. confidence_verifier uses symbolic parsing such as exact match, math-verify (hugging face)
+        # 2. llm_confidence_verifier uses a LLM to check the answer. 
 
-    if config.check_fn is not None:
-        check_fn = config.check_fn
-        if check_fn == "confidence_verifier":
-            label_dict, metrics, cr_labels = confidence_verifier(local_dataset,config,**config.check_fn_args)
-        elif check_fn == "llm_confidence_verifier":
-            label_dict, metrics, cr_labels = llm_confidence_verifier(local_dataset,config,**config.check_fn_args)
-        
-        all_metrics[config.name] = metrics
-        for k,v in label_dict.items():
-            if available:
-                final_dataset = final_dataset.remove_columns([k]) 
-            final_dataset = final_dataset.add_column(k,v)
-            local_dataset = local_dataset.add_column(k,v)
+        if config.check_fn is not None:
+            check_fn = config.check_fn
+            if check_fn == "confidence_verifier":
+                label_dict, metrics, cr_labels = confidence_verifier(local_dataset,config,**config.check_fn_args)
+            elif check_fn == "llm_confidence_verifier":
+                label_dict, metrics, cr_labels = llm_confidence_verifier(local_dataset,config,**config.check_fn_args)
+            
+            all_metrics[config.name] = metrics
+            for k,v in label_dict.items():
+                if available:
+                    final_dataset = final_dataset.remove_columns([k]) 
+                final_dataset = final_dataset.add_column(k,v)
+                local_dataset = local_dataset.add_column(k,v)
 
-    ##### END OF FOR LOOP AND CONFIG EVALUATION #####
+        ##### END OF FOR LOOP AND CONFIG EVALUATION #####
 
-    save_results = []
+        save_results = []
 
-    for idx, output in enumerate(outputs):
-        try:
-            question = local_dataset[idx]["problem"] # with context (Hotpot)
-        except:
-            question = local_dataset[idx]["question"] # without context (Hotpot)
-        question = question.split("\n\n")[0].strip()
-        gt_answer = (
-            local_dataset[idx].get("answer") or
-            local_dataset[idx].get("solution") or
-            local_dataset[idx].get("final_answer") or
-            local_dataset[idx].get("label") or
-            ""
-        )
-        cr_match = int(cr_labels[idx])
-        for i in range(config.n):
-            text = output.outputs[i].text
+        for idx, output in enumerate(outputs):
+            try:
+                question = local_dataset[idx]["problem"] # with context (Hotpot)
+            except:
+                question = local_dataset[idx]["question"] # without context (Hotpot)
+            question = question.split("\n\n")[0].strip()
+            gt_answer = (
+                local_dataset[idx].get("answer") or
+                local_dataset[idx].get("solution") or
+                local_dataset[idx].get("final_answer") or
+                local_dataset[idx].get("label") or
+                ""
+            )
+            cr_match = int(cr_labels[idx])
+            for i in range(config.n):
+                text = output.outputs[i].text
 
-            # answer 추출
-            ans_match = re.findall(r"<answer>(.*?)</answer>", text, re.DOTALL)
-            answer = ans_match[-1].strip() if ans_match else ""
+                # answer 추출
+                ans_match = re.findall(r"<answer>(.*?)</answer>", text, re.DOTALL)
+                answer = ans_match[-1].strip() if ans_match else ""
 
-            # confidence 추출
-            conf_match = re.findall(r"<confidence>(.*?)</confidence>", text, re.DOTALL)
-            confidence = conf_match[-1].strip() if conf_match else ""
-            if confidence == "": # for RLAR
-                align_conf_pattern = r"<reasoning_confidence>(.*?)</reasoning_confidence>\s*<answer_confidence>(.*?)</answer_confidence>"
-                dual_matches = re.findall(align_conf_pattern, output.outputs[i].text, re.DOTALL | re.MULTILINE)
-                if dual_matches:
-                    _, confidence = dual_matches[-1]
-                else:
-                    confidence = ""
-            save_results.append({
-                "idx": idx,
-                "question": question,
-                "gold_label": gt_answer,
-                "answer": answer,
-                "is_correct": cr_match,
-                "confidence": confidence
-            })
+                # confidence 추출
+                conf_match = re.findall(r"<confidence>(.*?)</confidence>", text, re.DOTALL)
+                confidence = conf_match[-1].strip() if conf_match else ""
+                if confidence == "": # for RLAR
+                    align_conf_pattern = r"<reasoning_confidence>(.*?)</reasoning_confidence>\s*<answer_confidence>(.*?)</answer_confidence>"
+                    dual_matches = re.findall(align_conf_pattern, output.outputs[i].text, re.DOTALL | re.MULTILINE)
+                    if dual_matches:
+                        _, confidence = dual_matches[-1]
+                    else:
+                        confidence = ""
+                save_results.append({
+                    "model_name": config.name,
+                    "idx": idx,
+                    "question": question,
+                    "gold_label": gt_answer,
+                    "answer": answer,
+                    "is_correct": cr_match,
+                    "confidence": confidence
+                })
+
+        # 저장 (정성 분석)
+        save_path = os.path.join(global_args.log_path if global_args.log_path else ".", f"{config.name}_outputs.json")
+
+        with open(save_path, "w") as f:
+            json.dump(save_results, f, indent=4, ensure_ascii=False)
+
+        print(f"Saved JSON to {save_path}")
 
     
 
@@ -365,14 +374,6 @@ def main(global_args,local_configs):
             os.makedirs(global_args.log_path)
         with open(global_args.log_path+"/metrics.json", "w") as f:
             json.dump(all_metrics, f, indent=4)
-
-    # 저장 (정성 분석)
-    save_path = os.path.join(global_args.log_path if global_args.log_path else ".", f"{config.name}_outputs.json")
-
-    with open(save_path, "w") as f:
-        json.dump(save_results, f, indent=4, ensure_ascii=False)
-
-    print(f"Saved JSON to {save_path}")
     
     # final_dataset.push_to_hub(global_args.store_name, private=True)
     if updated:
