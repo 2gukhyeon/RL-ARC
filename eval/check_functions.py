@@ -6,7 +6,7 @@ from vllm import LLM, SamplingParams
 import gc
 from transformers import AutoTokenizer
 
-def confidence_extractor(response, **kwargs):
+def confidence_extractor(response, **kwargs): # answer confidence extractor
     """Extracts the confidence from the completions
     If a float is found within confidence tags, it is processed as follows:
     If the float is between 0 and 1, it is returned as is.
@@ -53,6 +53,52 @@ def confidence_extractor(response, **kwargs):
             else:
                 return 0, 0.0
 
+def reasoning_confidence_extractor(response, **kwargs): # reasoning confidence extractor
+    """Extracts the confidence from the completions
+    If a float is found within confidence tags, it is processed as follows:
+    If the float is between 0 and 1, it is returned as is.
+    If the float is between 1 and 100, it is divided by 100 and returned.
+    If float is not directly found, the first number in the string is extracted and processed as above.
+    If no float is found, 0 is returned.    
+    """
+    reasoning_conf_pattern = r"<reasoning_confidence>(.*?)</reasoning_confidence>"
+  
+    reasoning_conf_matches = re.findall(reasoning_conf_pattern, response, re.DOTALL | re.MULTILINE)
+    # Get the last confidence, if exists
+    last_reasoning_confidence = reasoning_conf_matches[-1] if reasoning_conf_matches else ""
+
+    if last_reasoning_confidence == "": # for RLAR
+        align_conf_pattern = r"<reasoning_confidence>(.*?)</reasoning_confidence>\s*<answer_confidence>(.*?)</answer_confidence>"
+        dual_matches = re.findall(align_conf_pattern, response, re.DOTALL | re.MULTILINE)
+        if dual_matches:
+            last_reasoning_confidence, _ = dual_matches[-1]
+        else:
+            last_reasoning_confidence = ""
+
+    if last_reasoning_confidence == "":
+        return 0, 0.0
+    else:
+        try:
+            confidence = float(last_reasoning_confidence)
+            if confidence > 1 and confidence <= 100:
+                return 1, confidence/100
+            elif confidence >= 0 and confidence <= 1:
+                return 1, confidence
+            else:
+                return 0, 0.0
+        except:
+            # extract the first number in the string
+            first_number = re.search(r'-?\d+(?:\.\d+)?', last_reasoning_confidence)
+            if first_number:
+                first_number = float(first_number.group())
+                if first_number >= 0 and first_number <= 1:
+                    return 1, first_number
+                elif first_number > 1 and first_number <= 100:
+                    return 1, first_number/100
+                else:
+                    return 0, 0.0
+            else:
+                return 0, 0.0
 
 def gen_correctness_reward(completions, answer, **kwargs):
     """Reward function that checks if the answer is correct or not
@@ -101,6 +147,8 @@ def confidence_verifier(local_dataset, config, format_fn="confidence_format", fo
     c_lengths = []
     confidence_levels = []
     conf_format_levels = []
+    reasoning_confidence_levels = []
+    reasoning_conf_format_levels = []
     metrics = {}
     n = config.n
     correctness_fn = gen_correctness_reward
@@ -114,7 +162,7 @@ def confidence_verifier(local_dataset, config, format_fn="confidence_format", fo
     ### CHECK CORRECTNESS ###
 
     for i in range(len(local_dataset)):
-        eval_list, c_len_list, conf_list, conf_format_list = [], [], [], []
+        eval_list, c_len_list, conf_list, conf_format_list, reasoning_conf_list, reasoning_conf_format_list  = [], [], [], [], [], []
         for j in range(n):
             pred_response = local_dataset[i][f"{config.name}-output_{j}"]
             try:
@@ -127,10 +175,13 @@ def confidence_verifier(local_dataset, config, format_fn="confidence_format", fo
 
             actual_correctness = correctness_fn(**args)[0]
             conf_format, conf_level = confidence_extractor(pred_response)
+            reasoning_conf_format, reasoning_conf_level = reasoning_confidence_extractor(pred_response)
             conf_format_list.append(conf_format)
+            reasoning_conf_format_list.append(reasoning_conf_format)
 
             c_len_list.append(len(pred[0]["content"]))
             conf_list.append(conf_level)
+            reasoning_conf_list.append(reasoning_conf_level)
             if actual_correctness == 1:
                 eval_list.append(1)
             else:
@@ -140,7 +191,9 @@ def confidence_verifier(local_dataset, config, format_fn="confidence_format", fo
         c_lengths.append(c_len_list)
         confidence_levels.append(conf_list)
         conf_format_levels.append(conf_format_list)
-
+        reasoning_confidence_levels.append(reasoning_conf_list)
+        reasoning_conf_format_levels.append(reasoning_conf_format_list)
+  
     ### END OF CHECK CORRECTNESS ###
      
     ### COMPUTE PASS@K ###
@@ -159,9 +212,11 @@ def confidence_verifier(local_dataset, config, format_fn="confidence_format", fo
         #If classification outputs are present (these come from classifier/probe), then we use the corresponding confidence levels
         if type(class_outputs[0]) == list:
             confidence_levels = [[c[1]] for c in class_outputs]
+            reasoning_confidence_levels = [[c[1]] for c in reasoning_class_outputs]
             print("Overriding confidence levels with classification outputs")
         else:
             confidence_levels = [ [c] for c in class_outputs]
+            reasoning_confidence_levels = [[c[1]] for c in reasoning_class_outputs]
 
     # take mean of c_lengths
     c_length_mean = np.mean(np.array(c_lengths))
@@ -169,25 +224,37 @@ def confidence_verifier(local_dataset, config, format_fn="confidence_format", fo
     label_dict[f"{config.name}-evals"] = evals
     label_dict[f"{config.name}-c_lengths"] = c_lengths
     label_dict[f"{config.name}-confidence_levels"] = confidence_levels
+    label_dict[f"{config.name}-reasoning_confidence_levels"] = reasoning_confidence_levels
     label_dict[f"{config.name}-conf_format_adherence"] = conf_format_levels
+    label_dict[f"{config.name}-reasoning_conf_format_adherence"] = reasoning_conf_format_levels
 
     correctness_array = np.array(evals).flatten()
     confidence_array = np.array(confidence_levels).flatten()
+    reasoning_confidence_array = np.array(reasoning_confidence_levels).flatten()
+    # the metrics related to answer confidence
     metrics["brier_score"] = get_brier(correctness_array, confidence_array) 
     metrics["ece"] = get_ece(correctness_array, confidence_array)
     metrics["auroc"] = get_auroc(correctness_array, confidence_array)
+    
+    # the metrics related to reasoning confidence
+    metrics["brier_score (r)"] = get_brier(correctness_array, reasoning_confidence_array) 
+    metrics["ece (r)"] = get_ece(correctness_array, reasoning_confidence_array)
+    metrics["auroc (r)"] = get_auroc(correctness_array, reasoning_confidence_array)
+    
 
     metrics["accuracy"] = metrics["pass@1"]
     metrics["completion length"] = c_length_mean
     metrics["confidence level"] = np.mean(np.array(confidence_levels))
+    metrics["reasoning_confidence level"] = np.mean(np.array(reasoning_confidence_levels))
     metrics["confidence format adherence"] = np.mean(
         np.array(conf_format_levels))
+    metrics["reasoning_confidence format adherence"] = np.mean(
+        np.array(reasoning_conf_format_levels))
 
     print(f"Metrics of {config.name} =")
     for k, v in metrics.items():
         print(f"{k}: {v}")
     return label_dict, metrics, responses
-
 
 def llm_confidence_verifier(local_dataset, config, judge_model="meta-llama/Llama-3.1-8B-Instruct", format_fn="confidence_format", **kwargs):
     label_dict = {f"{config.name}-evals": []}
@@ -195,6 +262,9 @@ def llm_confidence_verifier(local_dataset, config, judge_model="meta-llama/Llama
     c_lengths = []
     confidence_levels = []
     conf_format_levels = []
+    reasoning_confidence_levels = []
+    reasoning_conf_format_levels = []
+    
     metrics = {}
     n = config.n
 
@@ -268,7 +338,8 @@ def llm_confidence_verifier(local_dataset, config, judge_model="meta-llama/Llama
     # agg responses by taking groups of n and making a list of them
     for i in range(0, len(responses), n):
         agg_responses.append(responses[i:i+n])
-
+    
+    
     ####### END OF AGGREGATE RESPONSES #######
 
     # Compute accuracy
@@ -276,17 +347,20 @@ def llm_confidence_verifier(local_dataset, config, judge_model="meta-llama/Llama
     print(f"Accuracy of {config.name} = {accuracy}")
 
     for i in range(len(local_dataset)):
-        eval_list, c_len_list, conf_list, conf_format_list = [], [], [], []
+        eval_list, c_len_list, conf_list, conf_format_list, reasoning_conf_list, reasoning_conf_format_list = [], [], [], [], [], []
         for j in range(n):
             pred_response = local_dataset[i][f"{config.name}-output_{j}"]
             pred = [{"role": "assistant", "content": pred_response}]
 
             actual_correctness = agg_responses[i][j]
             conf_format, conf_level = confidence_extractor(pred_response)
+            reasoning_conf_format, reasoning_conf_level = reasoning_confidence_extractor(pred_response)
             conf_format_list.append(conf_format)
+            reasoning_conf_format_list.append(reasoning_conf_format)
 
             c_len_list.append(len(pred[0]["content"]))
             conf_list.append(conf_level)
+            reasoning_conf_list.append(reasoning_conf_level)
             if actual_correctness == 1:
                 eval_list.append(1)
             else:
@@ -296,6 +370,8 @@ def llm_confidence_verifier(local_dataset, config, judge_model="meta-llama/Llama
         c_lengths.append(c_len_list)
         confidence_levels.append(conf_list)
         conf_format_levels.append(conf_format_list)
+        reasoning_confidence_levels.append(reasoning_conf_list)
+        reasoning_conf_format_levels.append(reasoning_conf_format_list)
 
 
     if n not in config.pass_k_vals:
@@ -310,15 +386,23 @@ def llm_confidence_verifier(local_dataset, config, judge_model="meta-llama/Llama
     if class_outputs is not None:
         if type(class_outputs[0]) == list:
             confidence_levels = [[c[1]] for c in class_outputs]
+            reasoning_confidence_levels = [[c[1]] for c in reasoning_class_outputs]
             print("Overriding confidence levels with class outputs")
         else:
             confidence_levels = [ [c] for c in class_outputs]
+            reasoning_confidence_levels = [[c[1]] for c in reasoning_class_outputs]
 
     correctness_array = np.array(evals).flatten()
     confidence_array = np.array(confidence_levels).flatten()
+    reasoning_confidence_array = np.array(reasoning_confidence_levels).flatten()
     metrics["brier_score"] = get_brier(correctness_array, confidence_array) 
     metrics["ece"] = get_ece(correctness_array, confidence_array)
     metrics["auroc"] = get_auroc(correctness_array, confidence_array)
+
+    # the metrics related to reasoning confidence
+    metrics["brier_score (r)"] = get_brier(correctness_array, reasoning_confidence_array) 
+    metrics["ece (r)"] = get_ece(correctness_array, reasoning_confidence_array)
+    metrics["auroc (r)"] = get_auroc(correctness_array, reasoning_confidence_array)
 
     # take mean of c_lengths
     c_length_mean = np.mean(np.array(c_lengths))
@@ -326,13 +410,18 @@ def llm_confidence_verifier(local_dataset, config, judge_model="meta-llama/Llama
     label_dict[f"{config.name}-evals"] = evals
     label_dict[f"{config.name}-c_lengths"] = c_lengths
     label_dict[f"{config.name}-confidence_levels"] = confidence_levels
+    label_dict[f"{config.name}-reasoning_confidence_levels"] = reasoning_confidence_levels
     label_dict[f"{config.name}-conf_format_adherence"] = conf_format_levels
+    label_dict[f"{config.name}-reasoning_conf_format_adherence"] = reasoning_conf_format_levels
 
     metrics["accuracy"] = metrics["pass@1"]
     metrics["completion length"] = c_length_mean
     metrics["confidence level"] = np.mean(np.array(confidence_levels))
+    metrics["reasoning_confidence level"] = np.mean(np.array(reasoning_confidence_levels))
     metrics["confidence format adherence"] = np.mean(
         np.array(conf_format_levels))
+    metrics["reasoning_confidence format adherence"] = np.mean(
+        np.array(reasoning_conf_format_levels))
 
     print(f"Metrics of {config.name} =")
     for k, v in metrics.items():
