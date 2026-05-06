@@ -248,6 +248,41 @@ def main(global_args,local_configs):
                     counter += 1 
             print(f"Number of confidence calls needed for {config.name}: {conf_calls_needed/(config.n*len(outputs))}")
             run_metrics[config.name]["conf_calls_needed"] = conf_calls_needed/(config.n*len(outputs)) 
+        
+        if "reasoning_confidence_at_end" in config.vllm_task: 
+            inst = "Thinking time ended \n\n. My verbalized confidence in only my reasoning (thinking) process as a number between 0 and 100 is equal to "
+            prompts = []
+            for text, output in zip(texts, outputs):
+                for i in range(config.n):
+                    prompts.append(text + output.outputs[i].text + inst)
+
+            verb_sampling_params = SamplingParams(n = 1, temperature = 0, max_tokens=20)
+            verb_outputs = llm.generate(prompts,sampling_params=verb_sampling_params) 
+
+            conf_calls_needed = 0
+            counter = 0 
+            for output in outputs:
+                for i in range(config.n):
+                    conf_pattern = r"<reasoning_confidence>(.*?)</reasoning_confidence>"
+                    conf_matches = re.findall(conf_pattern, output.outputs[i].text, re.DOTALL | re.MULTILINE)
+                    reasoning_confidence = conf_matches[-1] if conf_matches else ""
+                    if reasoning_confidence == "": # for RLAR
+                        align_conf_pattern = r"<reasoning_confidence>(.*?)</reasoning_confidence>\s*<answer_confidence>(.*?)</answer_confidence>"
+                        dual_matches = re.findall(align_conf_pattern, output.outputs[i].text, re.DOTALL | re.MULTILINE)
+                        if dual_matches:
+                            reasoning_confidence, _ = dual_matches[-1]
+                        else:
+                            reasoning_confidence = ""
+
+                    ## ONLY IF NO CONFIDENCE IS FOUND, USE THE CONFIDENCE FROM THE VERB_OUTPUTS
+                    if reasoning_confidence == "":
+                        reasoning_confidence = verb_outputs[counter].outputs[0].text
+                        output.outputs[i].text = output.outputs[i].text + "<reasoning_confidence>" + reasoning_confidence + "</reasoning_confidence>"
+                        conf_calls_needed += 1
+                    counter += 1 
+            print(f"Number of confidence calls needed for {config.name}: {conf_calls_needed/(config.n*len(outputs))}")
+            run_metrics[config.name]["conf_calls_needed"] = conf_calls_needed/(config.n*len(outputs))   
+            
         if out_dict is None:
             out_dict = {}
 
@@ -319,19 +354,20 @@ def main(global_args,local_configs):
             cr_match = int(cr_labels[idx])
             for i in range(config.n):
                 text = output.outputs[i].text
-
                 # answer 추출
                 ans_match = re.findall(r"<answer>(.*?)</answer>", text, re.DOTALL)
                 answer = ans_match[-1].strip() if ans_match else ""
 
                 # confidence 추출
                 conf_match = re.findall(r"<confidence>(.*?)</confidence>", text, re.DOTALL)
+                reasoning_conf_match = re.findall(r"<reasoning_confidence>(.*?)</reasoning_confidence>", text, re.DOTALL)
                 confidence = conf_match[-1].strip() if conf_match else ""
+                reasoning_confidence = reasoning_conf_match[-1].strip() if reasoning_conf_match else ""
                 if confidence == "": # for RLAR
                     align_conf_pattern = r"<reasoning_confidence>(.*?)</reasoning_confidence>\s*<answer_confidence>(.*?)</answer_confidence>"
                     dual_matches = re.findall(align_conf_pattern, output.outputs[i].text, re.DOTALL | re.MULTILINE)
                     if dual_matches:
-                        _, confidence = dual_matches[-1]
+                        reasoning_confidence, confidence = dual_matches[-1]
                     else:
                         confidence = ""
                 save_results.append({
@@ -341,7 +377,8 @@ def main(global_args,local_configs):
                     "gold_label": gt_answer,
                     "answer": answer,
                     "is_correct": cr_match,
-                    "confidence": confidence
+                    "confidence": confidence,
+                    "reasoning_confidence": reasoning_confidence
                 })
 
         # 저장 (정성 분석)
