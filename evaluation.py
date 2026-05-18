@@ -325,12 +325,12 @@ def main(global_args,local_configs):
             check_fn = config.check_fn
             if check_fn == "confidence_verifier":
                 label_dict, metrics, cr_labels, reasoning_confidence_list = confidence_verifier(local_dataset,config,**config.check_fn_args)
-                metrics_rea, relevant_labels = reasoning_verifier(local_dataset, config, **config.check_fn_args)
+                # metrics_rea, relevant_labels = reasoning_verifier(local_dataset, config, **config.check_fn_args)
             elif check_fn == "llm_confidence_verifier":
                 label_dict, metrics, cr_labels, reasoning_confidence_list = llm_confidence_verifier(local_dataset,config,**config.check_fn_args)
-                metrics_rea, relevant_labels = reasoning_verifier(local_dataset, config, **config.check_fn_args)
+                # metrics_rea, relevant_labels = reasoning_verifier(local_dataset, config, **config.check_fn_args)
             
-            metrics.update(metrics_rea)
+            # metrics.update(metrics_rea)
             all_metrics[config.name] = metrics
             for k,v in label_dict.items():
                 if available:
@@ -357,7 +357,7 @@ def main(global_args,local_configs):
                 ""
             )
             cr_match = int(cr_labels[idx])
-            rea_match = int(relevant_labels[idx])
+            # rea_match = int(relevant_labels[idx])
             for i in range(config.n):
                 text = output.outputs[i].text
                 # answer 추출
@@ -385,12 +385,12 @@ def main(global_args,local_configs):
                     "is_correct": cr_match,
                     "confidence": confidence,
                     "reasoning_confidence": reasoning_confidence,
-                    "relevant": rea_match
+                    # "relevant": rea_match
                 })
     
-        reasoning_correctness = np.array(relevant_labels).flatten()
+        # reasoning_correctness = np.array(relevant_labels).flatten()
         reasoning_ece = {}
-        reasoning_ece["reasoning_ece"] = get_ece(reasoning_correctness, reasoning_confidence_list) # reasoning ece
+        # reasoning_ece["reasoning_ece"] = get_ece(reasoning_correctness, reasoning_confidence_list) # reasoning ece
         metrics.update(reasoning_ece)
         
         # 저장 (정성 분석)
