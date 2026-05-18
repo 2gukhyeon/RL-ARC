@@ -4,13 +4,14 @@ import copy
 from dataset_processing import process_dataset
 from vllm import LLM, SamplingParams
 from transformers import  AutoTokenizer, AutoModelForSequenceClassification
-from eval.eval_utils import hash_dataset, load_and_clean
+from eval.eval_utils import hash_dataset, load_and_clean, compute_pass_n, get_brier, get_ece, get_auroc, exact_match_score
 from eval.eval_args import GlobalArgs, LocalConfig
-from eval.check_functions import confidence_verifier, llm_confidence_verifier 
+from eval.check_functions import confidence_verifier, llm_confidence_verifier, reasoning_verifier
 import gc,os , re, math, json
 from tqdm import tqdm
 import torch
 import numpy as np
+
 
 def main(global_args,local_configs):
     try: 
@@ -323,10 +324,13 @@ def main(global_args,local_configs):
         if config.check_fn is not None:
             check_fn = config.check_fn
             if check_fn == "confidence_verifier":
-                label_dict, metrics, cr_labels = confidence_verifier(local_dataset,config,**config.check_fn_args)
+                label_dict, metrics, cr_labels, reasoning_confidence_list = confidence_verifier(local_dataset,config,**config.check_fn_args)
+                metrics_rea, relevant_labels = reasoning_verifier(local_dataset, config, **config.check_fn_args)
             elif check_fn == "llm_confidence_verifier":
-                label_dict, metrics, cr_labels = llm_confidence_verifier(local_dataset,config,**config.check_fn_args)
+                label_dict, metrics, cr_labels, reasoning_confidence_list = llm_confidence_verifier(local_dataset,config,**config.check_fn_args)
+                metrics_rea, relevant_labels = reasoning_verifier(local_dataset, config, **config.check_fn_args)
             
+            metrics.update(metrics_rea)
             all_metrics[config.name] = metrics
             for k,v in label_dict.items():
                 if available:
@@ -337,7 +341,8 @@ def main(global_args,local_configs):
         ##### END OF FOR LOOP AND CONFIG EVALUATION #####
 
         save_results = []
-
+        
+     
         for idx, output in enumerate(outputs):
             try:
                 question = local_dataset[idx]["problem"] # with context (Hotpot)
@@ -352,6 +357,7 @@ def main(global_args,local_configs):
                 ""
             )
             cr_match = int(cr_labels[idx])
+            rea_match = int(relevant_labels[idx])
             for i in range(config.n):
                 text = output.outputs[i].text
                 # answer 추출
@@ -378,9 +384,15 @@ def main(global_args,local_configs):
                     "answer": answer,
                     "is_correct": cr_match,
                     "confidence": confidence,
-                    "reasoning_confidence": reasoning_confidence
+                    "reasoning_confidence": reasoning_confidence,
+                    "relevant": rea_match
                 })
-
+    
+        reasoning_correctness = np.array(relevant_labels).flatten()
+        reasoning_ece = {}
+        reasoning_ece["reasoning_ece"] = get_ece(reasoning_correctness, reasoning_confidence_list) # reasoning ece
+        metrics.update(reasoning_ece)
+        
         # 저장 (정성 분석)
         save_path = os.path.join(global_args.log_path if global_args.log_path else ".", f"{config.name}_outputs.json")
 
