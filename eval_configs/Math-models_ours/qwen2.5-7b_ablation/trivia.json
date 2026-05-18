@@ -1,0 +1,22 @@
+[ 
+
+{
+    "dataset_name": "data/trivia",
+    "hash_key": "question",
+    "store_name": "eval_outputs/Math-models-fresh/trivia",
+    "gpu_memory_utilization":0.9,
+    "log_path": "results/Math-models-fresh/trivia"
+}, 
+{   "name":"RLAR_0.4_0", 
+"model": "gguk2on/qwen2.5-7B-rlar_g8_b384_math_0.4_0",
+"check_fn": "llm_confidence_verifier",
+"sys_prompt_name": "tabc_align",
+"vllm_task": ["confidence_at_end","ans_at_end", "reasoning_confidence_at_end"]
+},
+{   "name":"RLAR_00.15", 
+"model": "gguk2on/qwen2.5-7B-rlar_g8_b384_math_00.15",
+"check_fn": "llm_confidence_verifier",
+"sys_prompt_name": "tabc_align",
+"vllm_task": ["confidence_at_end","ans_at_end", "reasoning_confidence_at_end"]
+}
+]
