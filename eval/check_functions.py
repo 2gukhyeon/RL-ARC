@@ -5,6 +5,9 @@ import re
 from vllm import LLM, SamplingParams
 import gc
 from transformers import AutoTokenizer
+from openai import OpenAI
+
+client = OpenAI()
 
 def confidence_extractor(response, **kwargs): # answer confidence extractor
     """Extracts the confidence from the completions
@@ -254,7 +257,7 @@ def confidence_verifier(local_dataset, config, format_fn="confidence_format", fo
     print(f"Metrics of {config.name} =")
     for k, v in metrics.items():
         print(f"{k}: {v}")
-    return label_dict, metrics, responses
+    return label_dict, metrics, responses, reasoning_confidence_array
 
 def llm_confidence_verifier(local_dataset, config, judge_model="meta-llama/Llama-3.1-8B-Instruct", format_fn="confidence_format", **kwargs):
     label_dict = {f"{config.name}-evals": []}
@@ -429,4 +432,124 @@ def llm_confidence_verifier(local_dataset, config, judge_model="meta-llama/Llama
 
     del llm
     gc.collect()
-    return label_dict, metrics, responses
+    return label_dict, metrics, responses, reasoning_confidence_array
+
+
+def reasoning_verifier(local_dataset, config, judge_model="gpt-4o-mini",
+                       format_fn="confidence_format",
+                       **kwargs):
+    label_dict = {f"{config.name}-evals": []}
+    evals = []
+    c_lengths = []
+    confidence_levels = []
+    conf_format_levels = []
+
+    
+    metrics = {}
+    n = config.n
+
+    # FIRST EXTRACT OUT ALL ANSWERS FROM THE MODEL OUTPUTS. 
+
+    # for i in range(len(local_dataset)):
+    #     q_spec_ans = []
+    #     for j in range(n):
+    #         pred = local_dataset[i][f"{config.name}-output_{j}"]
+    #         ans_pattern = r"<answer>(.*?)</answer>"
+    #         # Get all <answer>...</answer> occurrences
+    #         ans_matches = re.findall(
+    #             ans_pattern, pred, re.DOTALL | re.MULTILINE)
+    #         # Get the last answer, if exists
+    #         last_answer = ans_matches[-1] if ans_matches else ""
+    #         if last_answer == "":
+    #             last_answer = "I don't know"
+    #         q_spec_ans.append(last_answer)
+    #     extracted_answers.append(q_spec_ans)
+    extracted_reasons = []
+    extracted_answers = []
+    for i in range(len(local_dataset)):
+        q_spec_rea = []
+        q_spec_ans = []
+        for j in range(n):
+            pred = local_dataset[i][f"{config.name}-output_{j}"]
+            
+            ans_pattern = r"<answer>(.*?)</answer>"
+            # Get all <answer>...</answer> occurrences
+            ans_matches = re.findall(
+                ans_pattern, pred, re.DOTALL | re.MULTILINE)
+            # Get the last answer, if exists
+            last_answer = ans_matches[-1] if ans_matches else ""
+            if last_answer == "":
+                last_answer = "I don't know"
+            q_spec_ans.append(last_answer)
+            
+            r_pattern = r"<think>(.*?)</think>"
+            rea_matches = re.findall(
+                r_pattern, pred, re.DOTALL | re.MULTILINE)
+            # Get the last answer, if exists
+            last_reason = rea_matches[-1] if rea_matches else ""
+            if last_reason == "":
+                last_reason = "I don't know"
+            q_spec_rea.append(last_reason)
+        extracted_reasons.append(q_spec_rea)
+        extracted_answers.append(q_spec_ans)
+
+    ####### DO LLM AS JUDGE SETUP #######
+    reasoning_sys_prompt = """
+    You are a judge who will be given a question, ground truth answers, and a model-generated reasoning process.
+    The model-generated reasoning (thinking) process is considered correct if all of its content is related to at least one of the ground truth answers and is truthful and logically valid for generating the model-generated answer.
+    You need to determine whether the model-generated reasoning (thinking) process is correct or not.
+    Your response should be a single word: 'YES' if the reasoning (thinking) process is correct, and 'NO' if it is not.
+    """
+
+    reasoning_responses = []
+    chosen_key = "question" if "question" in local_dataset.column_names else "problem"
+
+    #Generate prompts for each example
+    for i in range(len(local_dataset)):
+        for j in range(n):
+            user_prompt = f"""
+            Question: {local_dataset[i][chosen_key]}
+            Ground Truth Answers: {local_dataset[i]["answer"]}
+            Model Generated Reasoning Process: {extracted_reasons[i][j]}
+            """
+   
+            try:
+                response = client.chat.completions.create(
+                    model=judge_model,
+                    temperature=0,
+                    max_tokens=10,
+                    messages=[
+                        {
+                            "role": "system",
+                            "content": reasoning_sys_prompt,
+                        },
+                        {
+                            "role": "user",
+                            "content": user_prompt,
+                        },
+                    ],
+                )
+
+                text_r = (
+                    response.choices[0]
+                    .message.content
+                    .strip()
+                )
+
+                if "yes" in text_r.lower():
+                    reasoning_responses.append(1)
+                else:
+                    reasoning_responses.append(0)
+
+            except Exception as e:
+                print(f"Error at sample {i}, output {j}: {e}")
+                reasoning_responses.append(0)
+  
+    ####### END OF AGGREGATE RESPONSES #######
+
+    # Compute accuracy
+    r_accuracy = np.mean(reasoning_responses)
+    print(f"r_Accuracy of {config.name} = {r_accuracy}")
+    metrics["reasoning_relevance_accuracy"] = r_accuracy
+
+    return metrics, reasoning_responses
