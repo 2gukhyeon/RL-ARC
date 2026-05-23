@@ -101,6 +101,15 @@ def main(global_args,local_configs):
         llm = LLM(model=config.model,gpu_memory_utilization=global_args.gpu_memory_utilization)
         outputs = llm.generate(texts,sampling_params=sampling_params)
 
+        
+        # Save model's original outputs
+        original_outputs = []
+        for output in outputs:
+            sample_outputs = []
+            for i in range(len(output.outputs)):
+                sample_outputs.append(output.outputs[i].text)
+            original_outputs.append(sample_outputs)
+            
         ##### POST-GENERATION PROCESSING #####
 
         ## After generation of response, each config can optionally go through different processing functions to get answer,confidence
@@ -380,6 +389,7 @@ def main(global_args,local_configs):
                     "model_name": config.name,
                     "idx": idx,
                     "question": question,
+                    "response": original_outputs[idx][i],  # target model original output
                     "gold_label": gt_answer,
                     "answer": answer,
                     "is_correct": cr_match,
