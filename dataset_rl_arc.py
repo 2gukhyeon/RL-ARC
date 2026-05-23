@@ -1,12 +1,9 @@
 from torch.utils.data import Dataset
-from preprocess import preprocess
 from transformers import AutoTokenizer
 import torch 
 import pandas as pd
 import json
-from datasets import load_dataset
-from utils import duplicate
-# input format
+
 
 instruction = "\n\nPROBLEM: {question}\n\nEND OF PROBLEM\n\nMODEL'S RESPONSE: {response}\n\nEND OF RESPONSE\n\n"
 
@@ -15,7 +12,7 @@ IGNORE_INDEX: int = -100
 
 
 # For cls
-class CorrectionJSONDataset(Dataset):
+class ClassifierDataset(Dataset):
     def __init__(self, q_path, tokenizer, is_train=True,): 
         self.q_path = q_path
         self.data = []
