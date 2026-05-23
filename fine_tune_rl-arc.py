@@ -3,23 +3,19 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification, Trai
 from huggingface_hub import login
 import argparse
 import torch
-from dataset_rl_arc import CorrectionJSONDataset
-
-from peft import LoraConfig, get_peft_model, TaskType
+from dataset_rl_arc import ClassifierDataset
 import utils
-from baseline_dataset import BaselineDataset
+
 # for utilizing GPU
 device = torch.device("cuda" if torch.cuda.is_available() else 'cpu')
 
 #### argument #### 
 parser = argparse.ArgumentParser()
 # required = True
-parser.add_argument('--model_ckpt', help='pre-trained open-source model: huggingface_model_path', type=str, required=True, default="google/gemma-2b")
+parser.add_argument('--model_ckpt', help='pre-trained open-source model: huggingface_model_path', type=str, required=True, default="Qwen/Qwen2.5-7B")
 parser.add_argument('--seed', help='seed (2, 10, or 42)', type=int, required=True)
-parser.add_argument('--llm', help='llama3.2, gpt3.5, llama2, mistral', type=str, required=True)
 
 # required = False
-parser.add_argument('--ratio', help='reasoning thres.', type=float, required=False, default=-1)
 parser.add_argument('--per_device_train_batch_size', help='total batch size / # of gradient accumulation steps', type=int, required=False, default=16)
 parser.add_argument('--gradient_accumulation_steps', help='# of gradient accumulation steps', type=int, required=False, default=4)
 parser.add_argument('--save_path', help='path where the aligner model ckpt to be saved', type=str, required=False, default='./models')
@@ -34,7 +30,6 @@ args = parser.parse_args()
 
 
 seed = args.seed
-llm = args.llm
 model_ckpt = args.model_ckpt
 model_name = model_ckpt.split("/")[1]
 lr = args.lr
@@ -47,10 +42,10 @@ weight_decay = args.weight_decay
 
 
 num_labels = 1
-question_path = "./dataset/piqa/train.jsonl"
+question_path = "./dataset/big-math-digit.json"
 
-save_path = f"{args.save_path}/{llm}/{task}/cls/{model_name}/{is_ours}/lora_{is_lora}/{seed}/{back_ratio}"
-logging_dir = f"{args.logging_dir}/{llm}/{task}/cls/{model_name}/{is_ours}/lora_{is_lora}/{seed}/{back_ratio}"
+save_path = f"{args.save_path}/{model_name}"
+logging_dir = f"{args.logging_dir}/{model_name}"
 
 
 ##############################################################
@@ -71,7 +66,6 @@ base_model.config.pad_token_id = tokenizer.pad_token_id
 
 
 dataset = ClassifierDataset(question_path, tokenizer, True) # OURS
-# dataset = BaselineDataset(task, question_path, answer_path, tokenizer,True, None, "gkp") # baseline
 data_collator = DataCollatorWithPadding(tokenizer, pad_to_multiple_of=8)
 print("### loaded dataset ###")
 
