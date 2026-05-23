@@ -21,15 +21,15 @@ parser.add_argument('--llm', help='llama3.2, gpt3.5, llama2, mistral', type=str,
 # required = False
 parser.add_argument('--ratio', help='reasoning thres.', type=float, required=False, default=-1)
 parser.add_argument('--per_device_train_batch_size', help='total batch size / # of gradient accumulation steps', type=int, required=False, default=16)
-parser.add_argument('--gradient_accumulation_steps', help='# of gradient accumulation steps', type=int, required=False, default=1)
+parser.add_argument('--gradient_accumulation_steps', help='# of gradient accumulation steps', type=int, required=False, default=4)
 parser.add_argument('--save_path', help='path where the aligner model ckpt to be saved', type=str, required=False, default='./models')
 parser.add_argument('--logging_dir', help='path where the logging of aligner model to be saved', type=str, required=False, default="./runs")
-parser.add_argument('--lr', help='learning rate', type=float, required=False, default=2e-4)
-parser.add_argument('--lr_scheduler_type', help='learning rate scheduler', type=str, required=False, default="cosine")
-parser.add_argument('--epoch', help='training epoch', type=int, required=False, default=6)
-parser.add_argument('--lr_warmup_ratio', help='warmup step ratio, which is # of steps ("total steps * ratio")', type=float, required=False, default=0) # llama
+parser.add_argument('--lr', help='learning rate', type=float, required=False, default=5e-6)
+parser.add_argument('--lr_scheduler_type', help='learning rate scheduler', type=str, required=False, default="linear")
+parser.add_argument('--epoch', help='training epoch', type=int, required=False, default=1)
+parser.add_argument('--lr_warmup_ratio', help='warmup step ratio, which is # of steps ("total steps * ratio")', type=float, required=False, default=0.05) # llama
 parser.add_argument('--weight_decay', help='weight decay', type=float, required=False, default=0.0)
-parser.add_argument('--huggingface_api_key', help='huggingface api key for gemma, llama ...', type=str, required=False, default="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")
+parser.add_argument('--huggingface_api_key', help='huggingface api key for gemma, llama ...', type=str, required=False, default="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")
 args = parser.parse_args()
 
 
@@ -46,7 +46,7 @@ lr_warmup_ratio = args.lr_warmup_ratio
 weight_decay = args.weight_decay
 
 
-num_labels = 2
+num_labels = 1
 question_path = "./dataset/piqa/train.jsonl"
 
 save_path = f"{args.save_path}/{llm}/{task}/cls/{model_name}/{is_ours}/lora_{is_lora}/{seed}/{back_ratio}"
