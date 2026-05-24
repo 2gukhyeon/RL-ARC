@@ -1,0 +1,1 @@
+CUDA_VISIBLE_DEVICES=1 python fine_tune_rl-arc.py   --model_ckpt Qwen/Qwen3-8B   --seed 42   --push_to_hub   --hub_model_id gguk2on/qwen3-8b-correctness-classifier_v2 --question_path ./data/big-math-digits/RLVR_qwen3_outputs.json
