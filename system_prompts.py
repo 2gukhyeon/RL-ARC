@@ -153,6 +153,8 @@ def get_sys_prompt(sys_prompt_name):
         return TABC_LONG_ALIGN_PROMPT
     elif sys_prompt_name == "tabc_align":
         return TABC_ALIGN_PROMPT
+    elif sys_prompt_name == "tabc_step":
+        return TABC_STEP_ALIGN_PROMPT
     else:
         raise ValueError(f"Invalid system prompt name: {sys_prompt_name}")
     
