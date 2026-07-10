@@ -1,7 +1,7 @@
 # Model arguments
 model_name_or_path: Qwen/Qwen2.5-7B
-run_name: "RLAR-math_step"
-output_dir: data/RLAR-math
+run_name: "RLVR-math_step"
+output_dir: data/RLVR_step-math
 model_revision: main
 torch_dtype: bfloat16
 attn_implementation: flash_attention_2
