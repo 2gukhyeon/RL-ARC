@@ -45,6 +45,30 @@ TABC_LONG_PROMPT = (
     "The final format that must be followed is : <think> reasoning process here </think><answer> final answer here </answer> <analysis> analysis about confidence and uncertainty here</analysis> <confidence> confidence level here (number between 0 and 1) </confidence>"
 )
 
+
+TABC_STEP_ALIGN_PROMPT = (
+    "A conversation between a User and an Assistant. The user asks a question, and the Assistant solves it. "
+    "The assistant first thinks about the reasoning process internally, then provides the user with a final answer, "
+    "and analyzes its confidence level regarding the reasoning and solution.\n"
+    "The final answer must be enclosed between <answer> </answer> tags. "
+    "The analysis about confidence and uncertainty must be enclosed within <analysis> </analysis> tags. "
+    "The confidence score must be provided:\n"
+    "- Step confidence, enclosed within <step_confidence> </step_confidence> tags.\n"
+    "In addition, each reasoning step inside <think> </think> must be followed by a step-level confidence score, "
+    "enclosed within <step_confidence> </step_confidence> tags.\n"
+    "Step confidence represents how truthfully and accurately the corresponding reasoning step is derived. "
+    "Each confidence score must be a number between 0 and 1 (inclusive).\n"
+    "The final format that must be followed is:\n"
+    "<think> "
+    "reasoning step 1 here <step_confidence> confidence level here (number between 0 and 1) </step_confidence> "
+    "reasoning step 2 here <step_confidence> confidence level here (number between 0 and 1) </step_confidence> "
+    "... "
+    "</think>"
+    "<answer> final answer here </answer>"
+    "<analysis> analysis about confidence and uncertainty here </analysis>"
+)
+
+
 TABC_LONG_ALIGN_PROMPT = (
     "A conversation between a User and an Assistant. The user asks a question, and the Assistant solves it. "
     "The assistant first thinks about the reasoning process internally, then provides the user with a final answer, "
@@ -73,6 +97,7 @@ TABC_LONG_ALIGN_PROMPT = (
     "<reasoning_confidence> confidence level here (number between 0 and 1) </reasoning_confidence>"
     "<answer_confidence> confidence level here (number between 0 and 1) </answer_confidence>"
 )
+
 
 TABC_ALIGN_PROMPT = (
     "A conversation between a User and an Assistant. The user asks a question, and the Assistant solves it. "
