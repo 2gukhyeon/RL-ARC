@@ -1,19 +1,3 @@
-def llama_format_prompt(example):
-    messages = example['prompt']
-
-    text = ""
-    for m in messages:
-        role = m["role"]
-        content = m["content"]
-
-        text += f"<|start_header_id|>{role}<|end_header_id|>\n"
-        text += f"{content.strip()}\n"
-        text += "<|eot_id|>\n"
-
-    text += "<|start_header_id|>assistant<|end_header_id|>\n"
-
-    return text
-    
 TABC_PROMPT = (
     "A conversation between User and Assistant. The user asks a question, and the Assistant solves it. The assistant "
     "first thinks about the reasoning process in the mind, provides the user with the final answer, then analyzes its confidence about the solution and then provides the user with its confidence level. "
@@ -45,30 +29,6 @@ TABC_LONG_PROMPT = (
     "The final format that must be followed is : <think> reasoning process here </think><answer> final answer here </answer> <analysis> analysis about confidence and uncertainty here</analysis> <confidence> confidence level here (number between 0 and 1) </confidence>"
 )
 
-
-TABC_STEP_ALIGN_PROMPT = (
-    "A conversation between a User and an Assistant. The user asks a question, and the Assistant solves it. "
-    "The assistant first thinks about the reasoning process internally, then provides the user with a final answer, "
-    "and analyzes its confidence level regarding the reasoning and solution.\n"
-    "The final answer must be enclosed between <answer> </answer> tags. "
-    "The analysis about confidence and uncertainty must be enclosed within <analysis> </analysis> tags. "
-    "The confidence score must be provided:\n"
-    "- Step confidence, enclosed within <step_confidence> </step_confidence> tags.\n"
-    "In addition, each reasoning step inside <think> </think> must be followed by a step-level confidence score, "
-    "enclosed within <step_confidence> </step_confidence> tags.\n"
-    "Step confidence represents how truthfully and accurately the corresponding reasoning step is derived. "
-    "Each confidence score must be a number between 0 and 1 (inclusive).\n"
-    "The final format that must be followed is:\n"
-    "<think> "
-    "reasoning step 1 here <step_confidence> confidence level here (number between 0 and 1) </step_confidence> "
-    "reasoning step 2 here <step_confidence> confidence level here (number between 0 and 1) </step_confidence> "
-    "... "
-    "</think>"
-    "<answer> final answer here </answer>"
-    "<analysis> analysis about confidence and uncertainty here </analysis>"
-)
-
-
 TABC_LONG_ALIGN_PROMPT = (
     "A conversation between a User and an Assistant. The user asks a question, and the Assistant solves it. "
     "The assistant first thinks about the reasoning process internally, then provides the user with a final answer, "
@@ -98,13 +58,11 @@ TABC_LONG_ALIGN_PROMPT = (
     "<answer_confidence> confidence level here (number between 0 and 1) </answer_confidence>"
 )
 
-
 TABC_ALIGN_PROMPT = (
     "A conversation between a User and an Assistant. The user asks a question, and the Assistant solves it. "
     "The assistant first thinks about the reasoning process internally, then provides the user with a final answer, "
     "and analyzes its confidence level regarding the reasoning and solution.\n"
     "The final answer must be enclosed between <answer> </answer> tags. "
-    "The analysis about confidence and uncertainty must be enclosed within <analysis> </analysis> tags. "
     "Two confidence scores must be provided:\n"
     "- Reasoning confidence, enclosed within <reasoning_confidence> </reasoning_confidence> tags.\n"
     "- Answer confidence, enclosed within <answer_confidence> </answer_confidence> tags.\n"
@@ -114,10 +72,29 @@ TABC_ALIGN_PROMPT = (
     "The final format that must be followed is:\n"
     "<think> reasoning process here </think>"
     "<answer> final answer here </answer>"
-    "<analysis> analysis about confidence and uncertainty here </analysis>"
     "<reasoning_confidence> confidence level here (number between 0 and 1) </reasoning_confidence>"
     "<answer_confidence> confidence level here (number between 0 and 1) </answer_confidence>"
 )
+
+# TABC_ALIGN_PROMPT = (
+#     "A conversation between a User and an Assistant. The user asks a question, and the Assistant solves it. "
+#     "The assistant first thinks about the reasoning process internally, then provides the user with a final answer, "
+#     "and analyzes its confidence level regarding the reasoning and solution.\n"
+#     "The final answer must be enclosed between <answer> </answer> tags. "
+#     "The analysis about confidence and uncertainty must be enclosed within <analysis> </analysis> tags. "
+#     "Two confidence scores must be provided:\n"
+#     "- Reasoning confidence, enclosed within <reasoning_confidence> </reasoning_confidence> tags.\n"
+#     "- Answer confidence, enclosed within <answer_confidence> </answer_confidence> tags.\n"
+#     "Reasoning confidence represents how truthfully and accurately the model reasons about the given question. "
+#     "Answer confidence represents how accurately the model answers the given question based on its reasoning process. "
+#     "Each confidence score must be a number between 0 and 1 (inclusive).\n"
+#     "The final format that must be followed is:\n"
+#     "<think> reasoning process here </think>"
+#     "<answer> final answer here </answer>"
+#     "<analysis> analysis about confidence and uncertainty here </analysis>"
+#     "<reasoning_confidence> confidence level here (number between 0 and 1) </reasoning_confidence>"
+#     "<answer_confidence> confidence level here (number between 0 and 1) </answer_confidence>"
+# )
 
 GEN_PROMPT = (
     "A conversation between User and Assistant. The user asks a question, and the Assistant solves it. The assistant "
@@ -153,8 +130,6 @@ def get_sys_prompt(sys_prompt_name):
         return TABC_LONG_ALIGN_PROMPT
     elif sys_prompt_name == "tabc_align":
         return TABC_ALIGN_PROMPT
-    elif sys_prompt_name == "tabc_step":
-        return TABC_STEP_ALIGN_PROMPT
     else:
         raise ValueError(f"Invalid system prompt name: {sys_prompt_name}")
     
