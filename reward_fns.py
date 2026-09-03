@@ -32,8 +32,8 @@ def format_reward(format_pattern,completions, **kwargs):
     elif format_pattern == "tac":
         pattern = r".*?</think>\s*<answer>.*?</answer>\s*<confidence>.*?</confidence>\s*\Z" 
     elif format_pattern == "tabc_align":
-        # pattern = r".*?</think>\s*<answer>.*?</answer>\s*<analysis>.*?</analysis>\s*<reasoning_confidence>.*?</reasoning_confidence>\s*<answer_confidence>.*?</answer_confidence>\s*\Z"
-        pattern = r".*?</think>\s*<answer>.*?</answer>\s*<reasoning_confidence>.*?</reasoning_confidence>\s*<answer_confidence>.*?</answer_confidence>\s*\Z"
+        pattern = r".*?</think>\s*<answer>.*?</answer>\s*<analysis>.*?</analysis>\s*<reasoning_confidence>.*?</reasoning_confidence>\s*<answer_confidence>.*?</answer_confidence>\s*\Z"
+    
     completion_contents = [completion[0]["content"] for completion in completions]
     
     if format_pattern == "tabc_align":
@@ -152,7 +152,7 @@ def brier_reward(format_pattern,completions,answer,source=None, **kwargs):
                 # ICLR ver.
                 if cr > 0.5: # correct case
                     align_weight = 0.3
-                    align_reward = align_weight * max(0.0, conf - float(reasoning_conf)) ** 2
+                    align_reward = align_weight * (conf - float(reasoning_conf))**2
                     
                     reward = 1 - brier - align_reward
                 else: # incorrect case
