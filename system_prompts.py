@@ -58,6 +58,7 @@ TABC_LONG_ALIGN_PROMPT = (
     "<answer_confidence> confidence level here (number between 0 and 1) </answer_confidence>"
 )
 
+# iclr v2
 TABC_ALIGN_PROMPT = (
     "A conversation between a User and an Assistant. The user asks a question, and the Assistant solves it. "
     "The assistant first thinks about the reasoning process internally, then provides the user with a final answer, "
@@ -66,8 +67,8 @@ TABC_ALIGN_PROMPT = (
     "Two confidence scores must be provided:\n"
     "- Reasoning confidence, enclosed within <reasoning_confidence> </reasoning_confidence> tags.\n"
     "- Answer confidence, enclosed within <answer_confidence> </answer_confidence> tags.\n"
-    "Reasoning confidence represents how truthfully and accurately the model reasons about the given question. "
-    "Answer confidence represents how accurately the model answers the given question based on its reasoning process. "
+    "Reasoning confidence represents how truthfully and soundly the model reasons about the given question. "
+    "Answer confidence represents how accurately the model answers the given question. When estimating answer confidence, use reasoning confidence as a basis for determining confidence in the final answer rather than simply copying it. "
     "Each confidence score must be a number between 0 and 1 (inclusive).\n"
     "The final format that must be followed is:\n"
     "<think> reasoning process here </think>"
@@ -75,6 +76,26 @@ TABC_ALIGN_PROMPT = (
     "<reasoning_confidence> confidence level here (number between 0 and 1) </reasoning_confidence>"
     "<answer_confidence> confidence level here (number between 0 and 1) </answer_confidence>"
 )
+
+
+# iclr v1
+# TABC_ALIGN_PROMPT = (
+#     "A conversation between a User and an Assistant. The user asks a question, and the Assistant solves it. "
+#     "The assistant first thinks about the reasoning process internally, then provides the user with a final answer, "
+#     "and analyzes its confidence level regarding the reasoning and solution.\n"
+#     "The final answer must be enclosed between <answer> </answer> tags. "
+#     "Two confidence scores must be provided:\n"
+#     "- Reasoning confidence, enclosed within <reasoning_confidence> </reasoning_confidence> tags.\n"
+#     "- Answer confidence, enclosed within <answer_confidence> </answer_confidence> tags.\n"
+#     "Reasoning confidence represents how truthfully and accurately the model reasons about the given question. "
+#     "Answer confidence represents how accurately the model answers the given question based on its reasoning process. "
+#     "Each confidence score must be a number between 0 and 1 (inclusive).\n"
+#     "The final format that must be followed is:\n"
+#     "<think> reasoning process here </think>"
+#     "<answer> final answer here </answer>"
+#     "<reasoning_confidence> confidence level here (number between 0 and 1) </reasoning_confidence>"
+#     "<answer_confidence> confidence level here (number between 0 and 1) </answer_confidence>"
+# )
 
 # TABC_ALIGN_PROMPT = (
 #     "A conversation between a User and an Assistant. The user asks a question, and the Assistant solves it. "
