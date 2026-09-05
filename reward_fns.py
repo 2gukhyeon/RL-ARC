@@ -157,7 +157,7 @@ def brier_reward(format_pattern,completions,answer,source=None, **kwargs):
                     reward = 1 - brier - align_reward
                 else: # incorrect case
                     align_weight = 0.1
-                    align_reward = align_weight * float(reasoning_conf) * (conf ** 2)
+                    align_reward = align_weight * float(reasoning_conf) * conf
                     reward = 1 - brier - align_reward
             matches.append(reward)
             
