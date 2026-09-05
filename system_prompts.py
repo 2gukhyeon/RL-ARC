@@ -73,6 +73,7 @@ TABC_ALIGN_PROMPT = (
     "The final format that must be followed is:\n"
     "<think> reasoning process here </think>"
     "<answer> final answer here </answer>"
+    "<analysis> analysis about confidence and uncertainty here </analysis>"
     "<reasoning_confidence> confidence level here (number between 0 and 1) </reasoning_confidence>"
     "<answer_confidence> confidence level here (number between 0 and 1) </answer_confidence>"
 )
