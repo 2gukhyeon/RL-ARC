@@ -64,7 +64,6 @@ TABC_ALIGN_PROMPT = (
     "The assistant first thinks about the reasoning process internally, then provides the user with a final answer, "
     "and analyzes its confidence level regarding the reasoning and solution.\n"
     "The final answer must be enclosed between <answer> </answer> tags. "
-    "The analysis about confidence and uncertainty must be enclosed within <analysis> </analysis> tags. "
     "Two confidence scores must be provided:\n"
     "- Reasoning confidence, enclosed within <reasoning_confidence> </reasoning_confidence> tags.\n"
     "- Answer confidence, enclosed within <answer_confidence> </answer_confidence> tags.\n"
@@ -74,7 +73,6 @@ TABC_ALIGN_PROMPT = (
     "The final format that must be followed is:\n"
     "<think> reasoning process here </think>"
     "<answer> final answer here </answer>"
-    "<analysis> analysis about confidence and uncertainty here </analysis>"
     "<reasoning_confidence> confidence level here (number between 0 and 1) </reasoning_confidence>"
     "<answer_confidence> confidence level here (number between 0 and 1) </answer_confidence>"
 )
