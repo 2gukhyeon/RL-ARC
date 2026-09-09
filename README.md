@@ -10,7 +10,7 @@ We are currently refining and organizing the codebase, and will release the clea
 ---
 
 ## News
-🎉 RL-ARC has been accepted to AACL-IJCNLP 2026!
+🎉 RL-ARC has been accepted to AACL-IJCNLP 2026 (Main)!
 
 
 ---
@@ -19,12 +19,7 @@ We are currently refining and organizing the codebase, and will release the clea
 
 ```bibtex
 @inproceedings{
-anonymous2026rlarc,
-title={{RL}-{ARC}: Calibrating Large Reasoning Models via Reasoning-guided Uncertainty},
-author={Anonymous},
-booktitle={The 5th Asia-Pacific Chapter of the Association for Computational Linguistics {\&} the 15th International Joint Conference on Natural Language Processing},
-year={2026},
-url={https://openreview.net/forum?id=cPCUt5kvbj}
+TBD
 }
 ```
 
