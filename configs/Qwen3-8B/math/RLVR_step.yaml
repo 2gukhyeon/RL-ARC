@@ -54,3 +54,4 @@ use_vllm: true
 vllm_device: auto
 vllm_gpu_memory_utilization: 0.4
 warmup_ratio: 0.20
+
