@@ -27,13 +27,17 @@ def exact_match_score(prediction, ground_truth):
 
 def format_reward(format_pattern,completions, **kwargs):
     """Reward function that checks if the completion has a specific format."""
-    if format_pattern == "ta":
+    if format_pattern == "tbac":
+        pattern = r".*?</think>\s*<analysis>.*?</analysis>\s*<answer>.*?</answer>\s*<confidence>.*?</confidence>\s*\Z"
+    elif format_pattern == "ta":
         pattern = r".*?</think>\s*<answer>.*?</answer>\s*\Z"
     elif format_pattern == "tac":
         pattern = r".*?</think>\s*<answer>.*?</answer>\s*<confidence>.*?</confidence>\s*\Z" 
+    elif format_pattern == "tabc":
+        pattern = r".*?</think>\s*<answer>.*?</answer>\s*<analysis>.*?</analysis>\s*<confidence>.*?</confidence>\s*\Z"
     elif format_pattern == "tabc_align":
-        # pattern = r".*?</think>\s*<answer>.*?</answer>\s*<reasoning_confidence>.*?</reasoning_confidence>\s*<answer_confidence>.*?</answer_confidence>\s*\Z"
         pattern = r".*?</think>\s*<answer>.*?</answer>\s*<analysis>.*?</analysis>\s*<reasoning_confidence>.*?</reasoning_confidence>\s*<answer_confidence>.*?</answer_confidence>\s*\Z"
+    
     completion_contents = [completion[0]["content"] for completion in completions]
     
     if format_pattern == "tabc_align":
@@ -45,7 +49,26 @@ def format_reward(format_pattern,completions, **kwargs):
         matches = [re.match(pattern, content, re.DOTALL | re.MULTILINE) for content in completion_contents]
         matches = [1.0 if match else 0.0 for match in matches]
     
-   
+    #if it matches, check if the confidence is between 0 and 1
+    # for i,match in enumerate(matches):
+    #     if match:
+    #         content = completion_contents[i]
+    #         if 'c' in format_pattern:
+    #             confidence_matches = re.findall(confidence_pattern, content, re.DOTALL | re.MULTILINE)  # Get all <confidence>...</confidence> occurrences
+    #             last_confidence = confidence_matches[-1] if confidence_matches else ""  # Get the last confidence, if exists
+    #             if last_confidence == "":
+    #                 matches[i] = 0.0
+    #             else:
+    #                 try:
+    #                     confidence = float(last_confidence)
+    #                     if confidence < 0 or confidence >1:
+    #                         matches[i] = 0.0
+    #                     else:
+    #                         matches[i] = 1
+
+    #                 except:
+    #                     matches[i] = 0.0
+    # if it matches, check if the confidence is between 0 and 1
     for i, match in enumerate(matches):
         if match:
             content = completion_contents[i]
@@ -149,28 +172,15 @@ def brier_reward(format_pattern,completions,answer,source=None, **kwargs):
             reward = 1 - brier
             
             if format_pattern == "tabc_align": # aligning reasoning and answer
-                # ICLR ver.
                 if cr > 0.5: # correct case
                     align_weight = 0.3
                     align_reward = align_weight * (conf - float(reasoning_conf))**2
-                    
                     reward = 1 - brier - align_reward
                 else: # incorrect case
                     align_weight = 0.1
-                    align_reward = align_weight * float(reasoning_conf) * conf
+                    align_reward = align_weight * (float(reasoning_conf)**2)
                     reward = 1 - brier - align_reward
             matches.append(reward)
-            
-            # EMNLP ver.
-            #     if cr > 0.5: # correct case
-            #         align_weight = 0.3
-            #         align_reward = align_weight * (conf - float(reasoning_conf))**2
-            #         reward = 1 - brier - align_reward
-            #     else: # incorrect case
-            #         align_weight = 0.1
-            #         align_reward = align_weight * (float(reasoning_conf)**2)
-            #         reward = 1 - brier - align_reward
-            # matches.append(reward)
 
         except:
             print("Could not parse confidence:", content)
