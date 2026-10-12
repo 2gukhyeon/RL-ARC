@@ -21,7 +21,9 @@ We are currently refining and organizing the codebase, and will release the clea
 @inproceedings{
 TBD
 }
+```
 
+```bibtex
 @misc{lee2026rlarccalibratinglargereasoning,
       title={RL-ARC: Calibrating Large Reasoning Models via Reasoning-guided Uncertainty}, 
       author={Gukhyeon Lee and SangKeun Lee},
