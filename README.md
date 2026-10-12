@@ -2,7 +2,7 @@ This repository contains the official code for the paper:
 
 > **RL-ARC: Calibrating Large Reasoning Models via Reasoning-guided Uncertainty**  
 > Gukhyeon Lee and SangKeun Lee \
-> \[[Paper Link](TBD)\]
+> \[[Paper Link](https://arxiv.org/abs/2610.11352)\]
 
 
 We are currently refining and organizing the codebase, and will release the cleaned version soon.
@@ -20,6 +20,16 @@ We are currently refining and organizing the codebase, and will release the clea
 ```bibtex
 @inproceedings{
 TBD
+}
+
+@misc{lee2026rlarccalibratinglargereasoning,
+      title={RL-ARC: Calibrating Large Reasoning Models via Reasoning-guided Uncertainty}, 
+      author={Gukhyeon Lee and SangKeun Lee},
+      year={2026},
+      eprint={2610.11352},
+      archivePrefix={arXiv},
+      primaryClass={cs.AI},
+      url={https://arxiv.org/abs/2610.11352}, 
 }
 ```
 
