@@ -11,6 +11,7 @@ We are currently refining and organizing the codebase, and will release the clea
 
 ## News
 🎉 RL-ARC has been selected for Oral presentation at AACL-IJCNLP 2026!
+
 🎉 RL-ARC has been accepted to AACL-IJCNLP 2026 (Main)!
 
 ---
