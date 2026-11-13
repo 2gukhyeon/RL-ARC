@@ -19,8 +19,25 @@ We are currently refining and organizing the codebase, and will release the clea
 ## 📄 Citation
 
 ```bibtex
-@inproceedings{
-TBD
+@inproceedings{lee-lee-2026-rl,
+    title = "{RL}-{ARC}: Calibrating Large Reasoning Models via Reasoning-guided Uncertainty",
+    author = "Lee, Gukhyeon  and
+      Lee, SangKeun",
+    editor = "Zhang, Yue  and
+      Xu, Ruifeng  and
+      Purwarianti, Ayu  and
+      Rong, Tong  and
+      Suzuki, Jun",
+    booktitle = "Proceedings of the 15th International Joint Conference on Natural Language Processing and the 5th Conference of the {A}sia-Pacific Chapter of the {A}ssociation for {C}omputational {L}inguistics (Volume 1: Long Papers)",
+    month = nov,
+    year = "2026",
+    address = "Hengqin, China",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2026.aacl-long.236/",
+    doi = "10.18653/2026.aacl-long.236",
+    pages = "5284--5310",
+    ISBN = "979-8-89176-439-2",
+    abstract = "Language models (LMs) are commonly trained with Reinforcement Learning with Verifiable Rewards (RLVR) to enhance their reasoning capabilities. However, since RLVR does not explicitly account for calibration during training, it can lead to severe calibration degradation, including overconfidence. Recent calibration-aware training methods for LMs, which incorporate objectives for uncertainty estimation into training, improve calibration but still exhibit overconfidence under distribution shift, while sacrificing reasoning performance. To this end, we propose RL-ARC, a calibration-aware training framework that jointly leverages reasoning confidence and answer confidence. Specifically, RL-ARC leverages reasoning confidence as an auxiliary signal for calibrating answer confidence, applying it as reasoning-guided regularization for correct cases and as an overconfidence penalty for incorrect cases. Comprehensive results across ID and OOD settings show that, beyond improving calibration, RL-ARC enables reasoning models to adaptively estimate confidence based on the given question without substantially sacrificing reasoning performance, thereby highlighting the importance of reasoning confidence for training reliable reasoning models."
 }
 ```
 
