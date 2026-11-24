@@ -67,7 +67,7 @@ We are currently refining and organizing the codebase, and will release the clea
   - hard disk >= 160 GB
   
 ```bash
-git clone https://github.com/2gukhyeon/RLAR_project.git
+git clone https://github.com/2gukhyeon/RL-ARC.git
 your git key!
 cd RLAR_tentative 
 pip install -r requirement.txt
