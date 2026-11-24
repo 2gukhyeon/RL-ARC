@@ -68,8 +68,6 @@ We are currently refining and organizing the codebase, and will release the clea
   
 ```bash
 git clone https://github.com/2gukhyeon/RL-ARC.git
-your git key!
-cd RLAR_tentative 
 pip install -r requirement.txt
 ```
 #### 2. xx.40 server (ours)
