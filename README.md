@@ -76,7 +76,7 @@ pip install -r requirement.txt
   - CUDA version >= 12.1
   
   ```bash
-  git clone https://github.com/2gukhyeon/RLAR_project.git
+  git clone https://github.com/2gukhyeon/RL-ARC.git
   conda create -n calibration python=3.10
   conda activate calibration
   pip install torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu121
